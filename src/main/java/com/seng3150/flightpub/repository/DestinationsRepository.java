@@ -1,0 +1,26 @@
+/*
+    DestinationsRepository.java
+        - Extends JPARepo allows access to DB
+*/
+
+package com.seng3150.flightpub.repository;
+
+import com.seng3150.flightpub.models.Destinations;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface DestinationsRepository extends JpaRepository<Destinations, String>, JpaSpecificationExecutor<Destinations> {
+
+    @Query(value = "SELECT * FROM destinations ", nativeQuery = true)
+    List<Destinations> findDestinations();
+
+    // Selects the top 10 destinations that have been books more than once
+    // Orders by highest to lowers
+    // removed "WHERE destinations.times_booked > 0 ORDER BY destinations.times_booked DESC" from query
+    @Query(value = "SELECT TOP 10 airport FROM destinations ", nativeQuery = true)
+    List<String> findDestinationName();
+
+}
