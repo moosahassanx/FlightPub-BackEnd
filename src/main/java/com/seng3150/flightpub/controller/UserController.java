@@ -8,6 +8,7 @@ package com.seng3150.flightpub.controller;
 
 import com.seng3150.flightpub.models.User;
 import com.seng3150.flightpub.repository.UserRepository;
+import com.seng3150.flightpub.Services.Discovery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

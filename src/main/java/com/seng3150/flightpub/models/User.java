@@ -62,7 +62,7 @@ public class User implements Serializable {
     private String address;
     
     @Column(name = "last_location")
-    private String lastLocation
+    private String lastLocation;
 
     @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "booking_list")
