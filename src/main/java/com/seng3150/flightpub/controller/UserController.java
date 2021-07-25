@@ -6,6 +6,7 @@
  */
 package com.seng3150.flightpub.controller;
 
+import com.seng3150.flightpub.Services.Discovery;
 import com.seng3150.flightpub.models.User;
 import com.seng3150.flightpub.repository.UserRepository;
 import org.springframework.http.HttpStatus;

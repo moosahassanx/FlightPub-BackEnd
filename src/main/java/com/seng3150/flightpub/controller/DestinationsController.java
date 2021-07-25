@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class DestinationsController {
+public class  DestinationsController {
 
     private final DestinationsRepository destinationsRepository;
 
@@ -22,7 +22,7 @@ public class DestinationsController {
     }
 
     // Returns a list of all destinations currently FlightPub offers
-    @RequestMapping("/getdestinations")
+    @RequestMapping("/getDestinations")
      List<Destinations> findAllDestinations() {
 
         return destinationsRepository.findDestinations();
