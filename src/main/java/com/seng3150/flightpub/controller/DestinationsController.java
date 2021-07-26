@@ -22,7 +22,7 @@ public class DestinationsController {
     }
 
     // Returns a list of all destinations currently FlightPub offers
-    @RequestMapping("/getdestinations")
+    @RequestMapping("/getDestinations")
      List<Destinations> findAllDestinations() {
 
         return destinationsRepository.findDestinations();
