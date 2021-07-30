@@ -77,6 +77,7 @@ public class UserController {
     // Else if no user exists with the given details sends back HTTP.Not_found response
     @RequestMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody HashMap<String,String> jsonData) {
+        // TODO: Have users login with secure encryption.
 
         // getting user details by using findByUserNameAndPasswordHash() method
         System.out.println("QUERYING FOR " + jsonData.get("userName") + " WITH PASSWORD " + jsonData.get("password"));
