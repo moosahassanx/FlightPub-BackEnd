@@ -127,7 +127,7 @@ create table availability
         constraint FKi0nsfko1j6md0y0w0y4o2mm9r
             references airlines,
     flight_number               varchar(255) not null,
-    departure_time              varchar(255) not null,
+    departure_time              DATETIME2 not null,
     class_code                  varchar(255) not null,
     ticket_code                 varchar(255) not null
         constraint FK4ct6y2b43nwxue9cgnp3yhxyv
@@ -150,8 +150,8 @@ create table price
     ticket_code   varchar(255)   not null
         constraint PriceTicketCode_FK
             references ticket_type,
-    start_date    datetime       not null,
-    end_date      datetime       not null,
+    start_date    DATETIME2       not null,
+    end_date      DATETIME2       not null,
     total_price   decimal(10, 2) not null,
     price_leg1    decimal(10, 2) default NULL,
     price_leg2    decimal(10, 2) default NULL,

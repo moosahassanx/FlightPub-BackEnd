@@ -10,14 +10,14 @@ import java.util.Date;
 import java.util.List;
 
 public interface AvailabilityRepository extends JpaRepository<Availability, String>, JpaSpecificationExecutor<Availability> {
-
+//datediff(day, cast(Availability.departure_time as datetime)
     @Query(value = "SELECT * " +
             "FROM Availability " +
             "WHERE Availability.flight_number = ?2 " +
-            "AND datediff(day, Availability.departure_time, ?1) = 0 " +
+            "AND Availability.departure_time = ?1 " +
             "AND Availability.number_available_seats_leg1 > ?3 " +
             "AND Availability.number_available_seats_leg2 > ?3", nativeQuery = true)
-     List<Availability> findFlightsAvailability(Date depTime , String flightNumber, int number_available_seats_leg1);
+     List<Availability> findFlightsAvailability(String depTime , String flightNumber, int seats);
 
 
 }

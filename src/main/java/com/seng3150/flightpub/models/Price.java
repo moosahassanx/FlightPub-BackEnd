@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -39,10 +40,10 @@ public class Price implements Serializable {
 
     @Id
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private Timestamp startDate;
 
     @Column(name = "end_date", nullable = false)
-    private Date endDate;
+    private Timestamp endDate;
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;

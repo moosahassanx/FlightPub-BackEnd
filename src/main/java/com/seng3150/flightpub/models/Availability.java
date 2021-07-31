@@ -6,9 +6,13 @@
 package com.seng3150.flightpub.models;
 
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @Entity
@@ -20,6 +24,7 @@ public class Availability implements Serializable {
 
     @Id
     @OneToOne
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "airline_code")
     private Airlines airline;
 
@@ -29,7 +34,7 @@ public class Availability implements Serializable {
 
     @Id
     @Column(name = "departure_time", nullable = false)
-    private String departureTime;
+    private Timestamp departureTime;
 
     @Id
     @Column(name = "class_code", nullable = false)
@@ -41,9 +46,9 @@ public class Availability implements Serializable {
     private TicketType ticketType;
 
     @Column(name = "number_available_seats_leg1", nullable = false)
-    private Integer numberAvailableSeatsLeg1;
+    private int numberAvailableSeatsLeg1;
 
     @Column(name = "number_available_seats_leg2")
-    private Integer numberAvailableSeatsLeg2;
+    private int numberAvailableSeatsLeg2;
 
 }

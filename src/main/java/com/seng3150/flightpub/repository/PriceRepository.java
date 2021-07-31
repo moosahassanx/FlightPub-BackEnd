@@ -9,6 +9,7 @@ public interface PriceRepository extends JpaRepository<Price, String>, JpaSpecif
 //    "AND  CAST(?2 as datetime) BETWEEN start_date AND end_date"
     @Query(value=   "SELECT min(total_price) " +
                     "FROM price "+
-                    "WHERE flight_number = ?1 " , nativeQuery = true)
+                    "WHERE flight_number = ?1 " +
+                    "AND  CAST(?2 AS DATETIME2) BETWEEN start_date AND end_date", nativeQuery = true)
     double getLowPrice(String flightNum, String date);
 }
