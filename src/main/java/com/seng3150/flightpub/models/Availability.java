@@ -23,7 +23,7 @@ public class Availability implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @OneToOne
+    @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "airline_code")
     private Airlines airline;
@@ -46,9 +46,9 @@ public class Availability implements Serializable {
     private TicketType ticketType;
 
     @Column(name = "number_available_seats_leg1", nullable = false)
-    private int numberAvailableSeatsLeg1;
+    private Integer numberAvailableSeatsLeg1;
 
     @Column(name = "number_available_seats_leg2")
-    private int numberAvailableSeatsLeg2;
+    private Integer numberAvailableSeatsLeg2;
 
 }

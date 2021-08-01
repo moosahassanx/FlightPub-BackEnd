@@ -14,9 +14,9 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Stri
     @Query(value = "SELECT * " +
             "FROM Availability " +
             "WHERE Availability.flight_number = ?2 " +
-            "AND Availability.departure_time = ?1 " +
-            "AND Availability.number_available_seats_leg1 > ?3 " +
-            "AND Availability.number_available_seats_leg2 > ?3", nativeQuery = true)
+            "AND datediff(day, Availability.departure_time, ?1) = 0 " +
+            "AND Availability.number_available_seats_leg1 >= ?3 " +
+            "AND (Availability.number_available_seats_leg2 >= ?3 OR Availability.number_available_seats_leg2 IS NULL)", nativeQuery = true)
      List<Availability> findFlightsAvailability(String depTime , String flightNumber, int seats);
 
 
