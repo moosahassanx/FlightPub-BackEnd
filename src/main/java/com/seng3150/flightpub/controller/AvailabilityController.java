@@ -33,7 +33,8 @@ public class AvailabilityController {
     @ResponseBody
     List<Availability> findAllDestinations(@RequestParam("depTime") String departureTime,
                                            @RequestParam("flightNum") String flightNumber,
-                                           @RequestParam("depSeats") int seats) throws ParseException {
+                                           @RequestParam("depSeats") int seats,
+                                           @RequestParam("class") String classCode) throws ParseException {
 
 //         String date = departureTime;
 //         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -41,7 +42,7 @@ public class AvailabilityController {
 //         Date parsedDate = inputFormat.parse(date);
 ////        String formattedDate = outputFormat.format(parsedDate);
 //        System.out.println("here is the new date"+parsedDate+"its here");
-        return availabilityRepository.findFlightsAvailability(departureTime,flightNumber, seats);
+        return availabilityRepository.findFlightsAvailability(departureTime,flightNumber, seats, classCode);
     }
 
 
