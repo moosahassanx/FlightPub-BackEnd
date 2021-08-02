@@ -12,6 +12,7 @@ import com.seng3150.flightpub.Services.Discovery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,12 +81,23 @@ public class UserController {
         // TODO: Have users login with secure encryption.
 
         // getting user details by using findByUserNameAndPasswordHash() method
+        System.out.println("=======================================================================================");
         System.out.println("QUERYING FOR " + jsonData.get("userName") + " WITH PASSWORD " + jsonData.get("password"));
-        List<User> data1 = userRepository.findByUserNameAndPasswordHash(jsonData.get("userName"), jsonData.get("password"));
+
+        // matching registered bcrypt password with input plaintext password
+        int strength = 10;      // work factor of bcrypt
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(strength, new SecureRandom());
+
+        List<User> data1 = userRepository.getDetailsByUserName1(jsonData.get("userName"));
         System.out.println("RETURNED: " + data1 + "\n\n");
 
+        System.out.println("INPUT PASSW: " + jsonData.get("password"));
+        System.out.println("RETRIEVED P: " + data1.get(0).getPasswordHash());
+        System.out.println("VERIFICATION: " + bCryptPasswordEncoder.matches(jsonData.get("password"), data1.get(0).getPasswordHash()));
+        boolean successfulLogin = bCryptPasswordEncoder.matches(jsonData.get("password"), data1.get(0).getPasswordHash());
+
         // successfully found the user with correct credentials
-        if(!data1.isEmpty()) {
+        if(successfulLogin == true) {
             return new ResponseEntity<>(data1, HttpStatus.OK);
         }
 
@@ -120,8 +132,13 @@ public class UserController {
             // Getting users salt to hash their password
             byte[] salt = getSalt();
 
+            // hash registration password and set it as the new one
+            int strength = 10;      // work factor of bcrypt
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(strength, new SecureRandom());
+            String encodedPassword = bCryptPasswordEncoder.encode(password_hash);
+
             // Saving user to the database
-            userRepository.save(new User(user_name, first_name, last_name, address, phone_number, password_hash, salt));
+            userRepository.save(new User(user_name, first_name, last_name, address, phone_number, encodedPassword, salt));
 
             // Returning HTTP status
             return new ResponseEntity<>( HttpStatus.OK);
@@ -174,7 +191,7 @@ public class UserController {
     }
 
     // Password hashing private methods
-    // Wont use these in the backend, but left in for submission for clarification
+    // Won't use these in the backend, but left in for submission for clarification
     private byte[] getSalt() {
 
         byte[] d = new byte[16];
@@ -183,7 +200,6 @@ public class UserController {
         return d;
     }
     private String hashPassword(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-
 
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, KEY);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

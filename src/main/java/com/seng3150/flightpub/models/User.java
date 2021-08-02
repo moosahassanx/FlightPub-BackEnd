@@ -8,6 +8,8 @@ package com.seng3150.flightpub.models;
 
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.context.annotation.Bean;
+
 import java.util.List;
 
 import javax.persistence.*;
