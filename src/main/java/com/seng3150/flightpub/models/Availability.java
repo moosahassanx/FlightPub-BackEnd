@@ -1,6 +1,6 @@
 /*
     Availability.java
-        - Models the DB table and maps the contraints via annotations
+        - Models the DB table and maps the constraints via annotations
 */
 
 package com.seng3150.flightpub.models;
@@ -12,7 +12,7 @@ import org.hibernate.annotations.NotFoundAction;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
+
 
 @Data
 @Entity
@@ -25,8 +25,8 @@ public class Availability implements Serializable {
     @Id
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "airline_code")
-    private Airlines airline;
+    @JoinColumn(name = "airline_code", referencedColumnName = "airline_code",nullable = false, updatable = false)
+    private Airlines airlineCode;
 
     @Id
     @Column(name = "flight_number", nullable = false)

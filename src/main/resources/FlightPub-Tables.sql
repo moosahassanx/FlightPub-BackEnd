@@ -1,6 +1,6 @@
 create table airlines
 (
-    airline_code  varchar(255) not null
+    airline_code  nvarchar(100) not null
         primary key,
     airline_name  varchar(255) not null,
     country_code3 varchar(255) not null
@@ -74,7 +74,7 @@ go
 
 create table flights
 (
-    airline_code             varchar(255) not null
+    airline_code             nvarchar(100) not null
         constraint [FlightsAirlineCode_FK ]
             references airlines,
     flight_number            varchar(255) not null,
@@ -123,7 +123,7 @@ go
 create table availability
 (
 
-    airline_code                varchar(255) not null
+    airline_code                nvarchar(100) not null
         constraint FKi0nsfko1j6md0y0w0y4o2mm9r
             references airlines,
     flight_number               varchar(255) not null,
@@ -140,7 +140,7 @@ go
 
 create table price
 (
-    airline_code  varchar(255)   not null
+    airline_code  nvarchar(100)   not null
         constraint PriceAirlineCode_FK
             references airlines,
     flight_number varchar(15)    not null,
@@ -187,8 +187,8 @@ create table booking
     user_id               bigint
         constraint FK9i7s2ny2t9tifoy03c0a6c42d
             references user_account,
-    airline_code          varbinary(255) not null,
-    flight_airline_code   varchar(255)   not null,
+    airline_code          nvarchar(100) not null,
+    flight_airline_code   nvarchar(100)   not null,
     flight_departure_time datetime2      not null,
     flight_flight_number  varchar(255)   not null,
     primary key (book_id, flight_number),

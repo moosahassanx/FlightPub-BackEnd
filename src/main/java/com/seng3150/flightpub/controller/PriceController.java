@@ -15,7 +15,8 @@ public class PriceController {
 
     @RequestMapping("/getlowprice")
     double getLowPrice(@RequestParam("fNum") String flightNum,
-                          @RequestParam("date") String date){
-        return priceRepository.getLowPrice(flightNum, date);
+                       @RequestParam("class") String classCode,
+                       @RequestParam("date") String date){
+        return priceRepository.getLowPrice(flightNum, classCode, date);
     }
 }

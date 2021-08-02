@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class FlightComposites implements Serializable {
 
-    private Airlines airline;
+    private Airlines airlineCode;
     private String flightNumber;
     private Timestamp departureTime;
 

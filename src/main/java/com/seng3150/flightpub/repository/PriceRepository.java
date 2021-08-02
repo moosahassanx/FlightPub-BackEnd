@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PriceRepository extends JpaRepository<Price, String>, JpaSpecificationExecutor<Price> {
 //    "AND  CAST(?2 as datetime) BETWEEN start_date AND end_date"
+    //add class check so the lowest price for the selected class is displayed
+    //try to fix the airline code to stop it from displaying null
     @Query(value=   "SELECT min(total_price) " +
                     "FROM price "+
                     "WHERE flight_number = ?1 " +
-                    "AND  CAST(?2 AS DATETIME2) BETWEEN start_date AND end_date", nativeQuery = true)
-    double getLowPrice(String flightNum, String date);
+                    "AND class_code = ?2 " +
+                    "AND  CAST(?3 AS DATETIME2) BETWEEN start_date AND end_date", nativeQuery = true)
+    double getLowPrice(String flightNum, String classCode, String dates);
 }

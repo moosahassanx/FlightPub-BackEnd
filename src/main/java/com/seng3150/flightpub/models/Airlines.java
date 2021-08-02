@@ -1,6 +1,6 @@
 /*
     Airlines.java
-        - Models the DB table and maps the contraints via annotations
+        - Models the DB table and maps the constraints via annotations
 */
 
 package com.seng3150.flightpub.models;
@@ -9,8 +9,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Data
 @Entity
