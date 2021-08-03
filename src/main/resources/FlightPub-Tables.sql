@@ -29,7 +29,8 @@ create table destinations
         constraint [DestinationCountryCode_FK ]
             references country,
     times_booked     int default 0 not null,
-    Tags varchar(264)
+    Tags varchar(264),
+    blacklisted BIT default 0 not null,
 )
 go
 
