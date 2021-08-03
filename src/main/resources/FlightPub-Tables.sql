@@ -176,6 +176,17 @@ create table user_account
 )
 go
 
+create table guest_user_account
+(
+    id            bigint identity
+            primary key nonclustered,
+    email_Address     varchar(255)                 not null,
+    first_name    varchar(255)                     not null,
+    last_name     varchar(255)                     not null,
+    phone_number  varchar(50)                      not null,
+)
+go
+
 create table booking
 (
     book_id               bigint         not null,
