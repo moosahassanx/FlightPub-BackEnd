@@ -34,6 +34,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.salt = salt;
         this.passwordHash = password;
+        this.userType = "user";
     }
 
     @Id
@@ -65,6 +66,9 @@ public class User implements Serializable {
     
     @Column(name = "last_location")
     private String lastLocation;
+
+    @Column(name = "account_type")
+    private String userType;
 
     @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "booking_list")
@@ -111,6 +115,8 @@ public class User implements Serializable {
     public String getAddress() {
         return address;
     }
+
+    public String getType() {return userType; }
 
     public void setAddress(String address) {
         this.address = address;

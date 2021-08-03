@@ -123,7 +123,6 @@ public class UserController {
             String phone_number = formData.getFirst("phoneNumber");
             String address = formData.getFirst("address");
 
-
             // Before hashing password check if the email already exists
             if(userRepository.existsByUserName(user_name)) {
                 return new ResponseEntity<>( HttpStatus.CONFLICT);
