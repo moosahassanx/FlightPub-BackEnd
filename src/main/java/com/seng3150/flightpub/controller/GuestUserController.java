@@ -9,12 +9,9 @@ package com.seng3150.flightpub.controller;
 import com.seng3150.flightpub.models.GuestUser;
 import com.seng3150.flightpub.repository.GuestUserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,16 +27,11 @@ public class GuestUserController {
 
 
 
-    @RequestMapping(value="/addGuestUser",
-            method= RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> addGuestUser(@RequestBody MultiValueMap<String, String> formData) {
-
-
-        String user_name =  formData.getFirst("email");
-        String first_name =  formData.getFirst("firstName");
-        String last_name =  formData.getFirst("lastName");
-        String phone_number = formData.getFirst("phoneNumber");
+    @PostMapping(path="/addGuestUser")
+    public ResponseEntity<?> addGuestUser(@RequestParam("email") String user_name,
+                                          @RequestParam("firstName") String first_name,
+                                          @RequestParam("lastName") String last_name,
+                                          @RequestParam("phoneNumber") String phone_number) {
 
         gusetUserRepository.save(new GuestUser(user_name, first_name, last_name, phone_number));
 
