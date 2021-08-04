@@ -192,7 +192,7 @@ go
 
 create table booking
 (
-    book_id               bigint         not null,
+    book_id               bigint identity       not null,
     flight_number         varchar(255)   not null,
     payment_complete      varchar(255)   not null,
     payment_id            bigint

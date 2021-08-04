@@ -44,13 +44,50 @@ public class BookingController {
     }
 
     @PostMapping(path="/addBooking")
-    public ResponseEntity<?> addBooking(@RequestParam("payment") String paymentComplete,
+    public ResponseEntity<?> addBooking(@RequestParam("fNumber") String flightNumber,
+                                        @RequestParam("payComp") String paymentComplete,
+                                        @RequestParam("payId") String paymentId,
+                                        @RequestParam("uId") String userId,
+                                        @RequestParam("gUId") String guestUserId,
+                                        @RequestParam("aCode") String airlineCode,
                                         @RequestParam("fACode") String flightAirlineCode,
-                                        @RequestParam("fDepTime") Date flightDepTime,
+                                        @RequestParam("fDepTime") String flightDepTime,
                                         @RequestParam("ffnumber") String flightFlightnumber) {
 
 
-        bookingRepository.save(new Booking(paymentComplete, flightAirlineCode, flightDepTime, flightFlightnumber));
+        bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
         return new ResponseEntity<>( HttpStatus.OK);
-}
+    }
+
+    @PostMapping(path="/addRejestedBooking")
+    public ResponseEntity<?> addRejestedBooking(@RequestParam("fNumber") String flightNumber,
+                                        @RequestParam("payComp") String paymentComplete,
+                                        @RequestParam("payId") String paymentId,
+                                        @RequestParam("uId") String userId,
+                                        @RequestParam("aCode") String airlineCode,
+                                        @RequestParam("fACode") String flightAirlineCode,
+                                        @RequestParam("fDepTime") String flightDepTime,
+                                        @RequestParam("ffnumber") String flightFlightnumber) {
+
+
+        bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    @PostMapping(path="/addGuestBooking")
+    public ResponseEntity<?> addGuestBooking(@RequestParam("fNumber") String flightNumber,
+                                        @RequestParam("payComp") String paymentComplete,
+                                        @RequestParam("payId") String paymentId,
+                                        @RequestParam("gUId") String guestUserId,
+                                        @RequestParam("aCode") String airlineCode,
+                                        @RequestParam("fACode") String flightAirlineCode,
+                                        @RequestParam("fDepTime") String flightDepTime,
+                                        @RequestParam("ffnumber") String flightFlightnumber) {
+
+
+        bookingRepository.addGuestBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+
 }
