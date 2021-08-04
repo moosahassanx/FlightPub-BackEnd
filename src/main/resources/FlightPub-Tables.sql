@@ -59,13 +59,13 @@ go
 
 create table payment
 (
-    payment_id bigint         not null
+    payment_id bigint  identity       not null
         constraint payment_pk
             primary key nonclustered,
     guest_user_id               bigint
         references guest_user_account,
     price      decimal(10, 2) not null,
-    user_id    bigint         not null
+    user_id    bigint
 )
 go
 
