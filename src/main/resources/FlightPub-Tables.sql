@@ -7,6 +7,17 @@ create table airlines
 )
 go
 
+create table guest_user_account
+(
+    id            bigint identity
+        primary key nonclustered,
+    email_Address     varchar(255)                 not null,
+    first_name    varchar(255)                     not null,
+    last_name     varchar(255)                     not null,
+    phone_number  varchar(50)                      not null,
+)
+go
+
 create table country
 (
     country_code3          varchar(255) not null
@@ -51,6 +62,8 @@ create table payment
     payment_id bigint         not null
         constraint payment_pk
             primary key nonclustered,
+    guest_user_id               bigint
+        references guest_user_account,
     price      decimal(10, 2) not null,
     user_id    bigint         not null
 )
@@ -176,16 +189,6 @@ create table user_account
 )
 go
 
-create table guest_user_account
-(
-    id            bigint identity
-            primary key nonclustered,
-    email_Address     varchar(255)                 not null,
-    first_name    varchar(255)                     not null,
-    last_name     varchar(255)                     not null,
-    phone_number  varchar(50)                      not null,
-)
-go
 
 create table booking
 (
@@ -198,6 +201,8 @@ create table booking
     user_id               bigint
         constraint FK9i7s2ny2t9tifoy03c0a6c42d
             references user_account,
+    guest_user_id               bigint
+            references guest_user_account,
     airline_code          nvarchar(100) not null,
     flight_airline_code   nvarchar(100)   not null,
     flight_departure_time datetime2      not null,

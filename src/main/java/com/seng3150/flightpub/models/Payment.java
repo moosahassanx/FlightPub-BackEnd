@@ -30,4 +30,7 @@ public class Payment implements Serializable {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Column(name = "guest_user_id", nullable = false)
+    private Long guestUserId;
+
 }

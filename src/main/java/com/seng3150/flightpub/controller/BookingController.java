@@ -5,15 +5,18 @@
 
 package com.seng3150.flightpub.controller;
 
-import com.seng3150.flightpub.models.User;
+import com.seng3150.flightpub.models.Booking;
 import com.seng3150.flightpub.repository.AvailabilityRepository;
 import com.seng3150.flightpub.repository.BookingRepository;
 import com.seng3150.flightpub.repository.FlightsRepository;
 import com.seng3150.flightpub.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import java.util.Date;
 
 @RestController
 public class BookingController {
@@ -40,16 +43,14 @@ public class BookingController {
         this.userRepository = userRepository;
     }
 
-    /*  Things passed into controller
-           - username           - Flight start date
-           - flight number      - ticket type       
-     */
-    // Testing controller method
-    @RequestMapping(value = "/bookFlight")
-    public ResponseEntity<?> bookFlight(@RequestBody HashMap<String,String> jsonData) {
-        // Grab the user entity, flight will be available,
-        User user = userRepository.getByUserName(jsonData.get("userName"));
-        return null;
-    }
+    @PostMapping(path="/addBooking")
+    public ResponseEntity<?> addBooking(@RequestParam("payment") String paymentComplete,
+                                        @RequestParam("fACode") String flightAirlineCode,
+                                        @RequestParam("fDepTime") Date flightDepTime,
+                                        @RequestParam("ffnumber") String flightFlightnumber) {
 
+
+        bookingRepository.save(new Booking(paymentComplete, flightAirlineCode, flightDepTime, flightFlightnumber));
+        return new ResponseEntity<>( HttpStatus.OK);
+}
 }
