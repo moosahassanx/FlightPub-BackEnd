@@ -26,6 +26,9 @@ public class Airlines implements Serializable {
     @Column(name = "airline_name", nullable = false)
     private String airlineName;
 
+    @Column(name = "sponsored", nullable = true)
+    private Integer sponsored;
+
     @ManyToOne
     @JoinColumn(name = "country_code3", insertable = false, updatable = false)
     private Country countryCode3;

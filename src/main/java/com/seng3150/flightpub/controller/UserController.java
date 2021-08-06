@@ -78,8 +78,6 @@ public class UserController {
     // Else if no user exists with the given details sends back HTTP.Not_found response
     @RequestMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody HashMap<String,String> jsonData) {
-        // TODO: Have users login with secure encryption.
-
         // getting user details by using findByUserNameAndPasswordHash() method
         System.out.println("=======================================================================================");
         System.out.println("QUERYING FOR " + jsonData.get("userName") + " WITH PASSWORD " + jsonData.get("password"));
@@ -104,6 +102,22 @@ public class UserController {
         // response message depending on the outcome so far
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
+
+    // send back the entire users list
+    @RequestMapping("/getUsers")
+    public List<User> getUserDetails() {
+        // legit 2 lines cuz what more do you want?
+        List<User> usersList = userRepository.getAllUsers();
+        return usersList;
+    }
+
+    // TODO (august 7, moosahassan): send back the entire users list that have requested for higher access
+//    @RequestMapping("/getUserPermissions")
+//    public List<User> getUserDetails() {
+//        // legit 2 lines cuz what more do you want?
+//        List<User> usersList = userRepository.getAllUsers();
+//        return usersList;
+//    }
     
     // Register user, mapped as form data to a map<Key,Data>
     // Pulls data from body request, Checks if this email already exists

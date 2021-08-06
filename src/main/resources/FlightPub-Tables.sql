@@ -3,7 +3,8 @@ create table airlines
     airline_code  varchar(255) not null
         primary key,
     airline_name  varchar(255) not null,
-    country_code3 varchar(255) not null
+    country_code3 varchar(255) not null,
+    sponsored  bit default 0 not null,
 )
 go
 

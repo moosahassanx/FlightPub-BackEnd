@@ -24,6 +24,7 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
             "WHERE airport = ?1", nativeQuery = true)
     void blacklistDestination(String airport, String blacklistState);
 
+    // getting all of the destinations in the db
     @Query(value = "SELECT * FROM destinations ", nativeQuery = true)
     List<Destinations> findDestinations();
 

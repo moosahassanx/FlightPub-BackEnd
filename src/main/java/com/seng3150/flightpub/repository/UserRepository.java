@@ -43,6 +43,15 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "WHERE user_name = ?1", nativeQuery = true)
     List<User> getDetailsByUserName1(String userName);
 
+//    @Query(value = "SELECT * " +
+//            "FROM user_account " +
+//            "WHERE user_name = ?1", nativeQuery = true)
+//    List<User> getDetailsByRequest(String requested);
+
+    @Query(value = "SELECT * " +
+            "FROM user_account ", nativeQuery = true)
+    List<User> getAllUsers();
+
     @Query(value = "SELECT * " +
             "FROM user_account " +
             "WHERE user_name = ?1", nativeQuery = true)
