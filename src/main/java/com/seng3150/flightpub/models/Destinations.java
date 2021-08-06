@@ -31,6 +31,9 @@ public class Destinations implements Serializable {
     @Column(name = "times_booked", nullable = false)
     private Integer timesBooked;
 
+    @Column(name = "blacklisted", nullable = false)
+    private Integer blacklisted;
+
     @Column(name = "Tags", nullable = false)
     private String Tags;
 
