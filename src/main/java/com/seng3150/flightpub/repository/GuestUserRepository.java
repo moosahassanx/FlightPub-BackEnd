@@ -30,4 +30,10 @@ public interface GuestUserRepository extends JpaRepository<GuestUser, Long>, Jpa
             "WHERE user_name = ?1", nativeQuery = true)
     User getDetailsByUserName(String userName);
 
+
+    @Query(value = "INSERT INTO guest_user_account" +
+            "(guest_user_account.email_address,guest_user_account.first_name,guest_user_account.last_name,guest_user_account.phone_number) " +
+            "OUTPUT Inserted.ID " +
+            "VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
+    int addGuestUser(String email, String firstName, String lastName, String phoneNumber);
 }

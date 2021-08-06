@@ -5,12 +5,10 @@
 package com.seng3150.flightpub.models;
 
 import lombok.Data;
-import lombok.Generated;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Entity
@@ -22,16 +20,16 @@ public class Booking implements Serializable {
 
     @Id
     @JsonIgnore
-    @Column(name = "book_id", nullable = false)
+    @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
 
     @OneToOne
-    @JoinColumn(name = "user_id" )
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "guest_user_id")
+    @JoinColumn(name = "guest_user_id", nullable = true)
     private GuestUser guestUser;
 
     @ManyToOne

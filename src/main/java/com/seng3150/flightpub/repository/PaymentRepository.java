@@ -4,17 +4,18 @@ import com.seng3150.flightpub.models.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.ResponseEntity;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpecificationExecutor<Payment> {
     @Query(value = "INSERT INTO payment" +
-            "(price, user_id)" +
+            "(payment.price,payment.user_id) " +
+            "OUTPUT Inserted.payment_id " +
             "VALUES (?1, ?2)", nativeQuery = true)
-    ResponseEntity<?> makeRPayment(double price, int userId);
+    int makeRPayment(double price, int userId);
 
 
     @Query(value = "INSERT INTO payment" +
-            "(price, guest_user_id)" +
+            "(payment.price,payment.guest_user_id) " +
+            "OUTPUT Inserted.payment_id " +
             "VALUES (?1, ?2)", nativeQuery = true)
-    ResponseEntity<?> makeGPayment(double price, int guestUserId);
+    int makeGPayment(double price, int guestUserId);
 }

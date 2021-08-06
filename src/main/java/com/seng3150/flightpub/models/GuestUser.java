@@ -20,16 +20,6 @@ public class GuestUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public GuestUser() {
-
-    }
-
-    public GuestUser(String userName, String firstName, String lastName, String phoneNumber) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-    }
 
     @Id
     @JsonIgnore
@@ -37,7 +27,7 @@ public class GuestUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email_Address", nullable = false)
+    @Column(name = "email_address", nullable = false)
     private String userName;
 
     @Column(name = "first_name", nullable = false)

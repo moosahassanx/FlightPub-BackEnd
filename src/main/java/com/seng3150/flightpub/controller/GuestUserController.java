@@ -6,13 +6,13 @@
  */
 package com.seng3150.flightpub.controller;
 
-import com.seng3150.flightpub.models.GuestUser;
 import com.seng3150.flightpub.repository.GuestUserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 @RestController
 public class GuestUserController {
@@ -26,17 +26,14 @@ public class GuestUserController {
     }
 
 
+    @RequestMapping("/getGuserId")
+    @ResponseBody
+    int getGuserId(@RequestParam("email") String email,
+                               @RequestParam("firstName") String firstName,
+                               @RequestParam("lastName") String lastName,
+                               @RequestParam("phoneNumber") String phoneNumber) throws ParseException {
 
-    @PostMapping(path="/addGuestUser")
-    public ResponseEntity<?> addGuestUser(@RequestParam("email") String user_name,
-                                          @RequestParam("firstName") String first_name,
-                                          @RequestParam("lastName") String last_name,
-                                          @RequestParam("phoneNumber") String phone_number) {
-
-        gusetUserRepository.save(new GuestUser(user_name, first_name, last_name, phone_number));
-
-        // Returning HTTP status
-        return new ResponseEntity<>( HttpStatus.OK);
+        return gusetUserRepository.addGuestUser(email,firstName, lastName, phoneNumber);
     }
 
 

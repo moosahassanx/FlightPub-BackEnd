@@ -5,18 +5,14 @@
 
 package com.seng3150.flightpub.controller;
 
-import com.seng3150.flightpub.models.Booking;
 import com.seng3150.flightpub.repository.AvailabilityRepository;
 import com.seng3150.flightpub.repository.BookingRepository;
 import com.seng3150.flightpub.repository.FlightsRepository;
 import com.seng3150.flightpub.repository.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 @RestController
 public class BookingController {
@@ -43,50 +39,50 @@ public class BookingController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(path="/addBooking")
-    public ResponseEntity<?> addBooking(@RequestParam("fNumber") String flightNumber,
-                                        @RequestParam("payComp") String paymentComplete,
-                                        @RequestParam("payId") String paymentId,
-                                        @RequestParam("uId") String userId,
-                                        @RequestParam("gUId") String guestUserId,
-                                        @RequestParam("aCode") String airlineCode,
-                                        @RequestParam("fACode") String flightAirlineCode,
-                                        @RequestParam("fDepTime") String flightDepTime,
-                                        @RequestParam("ffnumber") String flightFlightnumber) {
+    @RequestMapping("/makeBooking")
+    @ResponseBody
+    int addBooking(@RequestParam("fNumber") String flightNumber,
+                   @RequestParam("payComp") String paymentComplete,
+                   @RequestParam("payId") int paymentId,
+                   @RequestParam("uId") int userId,
+                   @RequestParam("gUId") int guestUserId,
+                   @RequestParam("aCode") String airlineCode,
+                   @RequestParam("fACode") String flightAirlineCode,
+                   @RequestParam("fDepTime") String flightDepTime,
+                   @RequestParam("ffnumber") String flightFlightnumber) {
 
+        return bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
 
-        bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
-        return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    @PostMapping(path="/addRejestedBooking")
-    public ResponseEntity<?> addRejestedBooking(@RequestParam("fNumber") String flightNumber,
-                                        @RequestParam("payComp") String paymentComplete,
-                                        @RequestParam("payId") String paymentId,
-                                        @RequestParam("uId") String userId,
-                                        @RequestParam("aCode") String airlineCode,
-                                        @RequestParam("fACode") String flightAirlineCode,
-                                        @RequestParam("fDepTime") String flightDepTime,
-                                        @RequestParam("ffnumber") String flightFlightnumber) {
+    @RequestMapping("/makeRBooking")
+    @ResponseBody
+    int addRejestedBooking(@RequestParam("fNumber") String flightNumber,
+                           @RequestParam("payComp") String paymentComplete,
+                           @RequestParam("payId") int paymentId,
+                           @RequestParam("uId") int userId,
+                           @RequestParam("aCode") String airlineCode,
+                           @RequestParam("fACode") String flightAirlineCode,
+                           @RequestParam("fDepTime") String flightDepTime,
+                           @RequestParam("ffnumber") String flightFlightnumber) {
 
+        return bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
 
-        bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
-        return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    @PostMapping(path="/addGuestBooking")
-    public ResponseEntity<?> addGuestBooking(@RequestParam("fNumber") String flightNumber,
-                                        @RequestParam("payComp") String paymentComplete,
-                                        @RequestParam("payId") String paymentId,
-                                        @RequestParam("gUId") String guestUserId,
-                                        @RequestParam("aCode") String airlineCode,
-                                        @RequestParam("fACode") String flightAirlineCode,
-                                        @RequestParam("fDepTime") String flightDepTime,
-                                        @RequestParam("ffnumber") String flightFlightnumber) {
+    @RequestMapping("/makeGBooking")
+    @ResponseBody
+    int makeGBooking(@RequestParam("fNumber") String flightNumber,
+                     @RequestParam("payComp") String paymentComplete,
+                     @RequestParam("payId") int paymentId,
+                     @RequestParam("gUId") int guestUserId,
+                     @RequestParam("aCode") String airlineCode,
+                     @RequestParam("fACode") String flightAirlineCode,
+                     @RequestParam("fDepTime") String flightDepTime,
+                     @RequestParam("ffnumber") String flightFlightnumber) {
 
+        return bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
 
-        bookingRepository.addGuestBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
-        return new ResponseEntity<>( HttpStatus.OK);
     }
 
 
