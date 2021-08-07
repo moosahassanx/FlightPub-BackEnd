@@ -23,7 +23,7 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     @Query(value = "SELECT TOP 10 airport FROM destinations ", nativeQuery = true)
     List<String> findDestinationName();
 
-    @Query(value = "update destinations set destinations.times_booked = destinations.times_booked + 1 OUTPUT Inserted.times_booked where destination_code = ?1 ", nativeQuery = true)
+    @Query(value = "update destinations set destinations.times_booked = destinations.times_booked + 1 OUTPUT Inserted.times_booked  where destination_code = ?1 ", nativeQuery = true)
     int updateTimesBooked(String whatever);
 
 }

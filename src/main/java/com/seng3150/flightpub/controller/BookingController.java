@@ -28,16 +28,23 @@ public class BookingController {
     private final FlightsRepository flightsRepository;
     private final UserRepository userRepository;
     private final DestinationsRepository destinationsRepository;
+    private final GuestUserBookingListRepository guestUserBookingListRepository;
+    private final RegistedUserBookingListRepository registedUserBookingListRepository;
 
     public BookingController(AvailabilityRepository availabilityRepository,
                              BookingRepository bookingRepository,
                              FlightsRepository flightsRepository,
-                             UserRepository userRepository, DestinationsRepository destinationsRepository) {
+                             UserRepository userRepository,
+                             DestinationsRepository destinationsRepository,
+                             GuestUserBookingListRepository guestUserBookingListRepository,
+                             RegistedUserBookingListRepository registedUserBookingListRepository) {
         this.availabilityRepository = availabilityRepository;
         this.bookingRepository = bookingRepository;
         this.flightsRepository = flightsRepository;
         this.userRepository = userRepository;
         this.destinationsRepository = destinationsRepository;
+        this.guestUserBookingListRepository = guestUserBookingListRepository;
+        this.registedUserBookingListRepository = registedUserBookingListRepository;
     }
 
     @RequestMapping("/makeBooking")
@@ -53,10 +60,14 @@ public class BookingController {
                    @RequestParam("FFNumber") String flightFlightNumber,
                    @RequestParam("DesCode") String desCode) {
 
-        destinationsRepository.updateTimesBooked(desCode);
-        return bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
 
+        destinationsRepository.updateTimesBooked(desCode);
+        int bookingId = bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
+        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        return bookingId;
     }
+
 
     @RequestMapping("/makeRBooking")
     @ResponseBody
@@ -72,8 +83,9 @@ public class BookingController {
 
 
         destinationsRepository.updateTimesBooked(desCode);
-        return bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
-
+        int bookingId = bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
+        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        return bookingId;
     }
 
     @RequestMapping("/makeGBooking")
@@ -89,8 +101,9 @@ public class BookingController {
                      @RequestParam("DesCode") String desCode) throws ParseException {
 
         destinationsRepository.updateTimesBooked(desCode);
-        return bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
-
+        int bookingId = bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
+        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        return bookingId;
     }
 
 
