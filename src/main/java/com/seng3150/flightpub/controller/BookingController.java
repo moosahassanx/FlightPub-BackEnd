@@ -55,18 +55,17 @@ public class BookingController {
                    @RequestParam("uId") int userId,
                    @RequestParam("gUId") int guestUserId,
                    @RequestParam("aCode") String airlineCode,
-                   @RequestParam("fACode") String flightAirlineCode,
                    @RequestParam("fDepTime") String flightDepTime,
-                   @RequestParam("FFNumber") String flightFlightNumber,
                    @RequestParam("DesCode") String desCode,
-                   @RequestParam("city") String location) {
+                   @RequestParam("classCode") String classCode,
+                   @RequestParam("ticketCode") String ticketCode) {
 
 
         destinationsRepository.updateTimesBooked(desCode);
-        int bookingId = bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
-        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
-        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
-        userRepository.updateLastLocation(location, userId);
+        int bookingId = bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, airlineCode, flightNumber);
+        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
+        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
+        availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
         return bookingId;
     }
 
@@ -78,15 +77,17 @@ public class BookingController {
                            @RequestParam("payId") int paymentId,
                            @RequestParam("uId") int userId,
                            @RequestParam("aCode") String airlineCode,
-                           @RequestParam("fACode") String flightAirlineCode,
                            @RequestParam("fDepTime") String flightDepTime,
-                           @RequestParam("FFNumber") String flightFlightNumber,
-                           @RequestParam("DesCode") String desCode) {
+                           @RequestParam("DesCode") String desCode,
+                           @RequestParam("classCode") String classCode,
+                           @RequestParam("ticketCode") String ticketCode) {
 
 
         destinationsRepository.updateTimesBooked(desCode);
-        int bookingId = bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
-        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        int bookingId = bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, airlineCode, flightNumber);
+        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
+        userRepository.updateLastLocation(desCode, userId);
+        availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
         return bookingId;
     }
 
@@ -98,13 +99,14 @@ public class BookingController {
                      @RequestParam("gUId") int guestUserId,
                      @RequestParam("aCode") String airlineCode,
                      @RequestParam("fDepTime") String flightDepTime,
-                     @RequestParam("fACode") String flightAirlineCode,
-                     @RequestParam("FFNumber") String flightFlightNumber,
-                     @RequestParam("DesCode") String desCode) throws ParseException {
+                     @RequestParam("DesCode") String desCode,
+                     @RequestParam("classCode") String classCode,
+                     @RequestParam("ticketCode") String ticketCode) throws ParseException {
 
         destinationsRepository.updateTimesBooked(desCode);
-        int bookingId = bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
-        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        int bookingId = bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, airlineCode, flightNumber);
+        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
+        availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
         return bookingId;
     }
 
