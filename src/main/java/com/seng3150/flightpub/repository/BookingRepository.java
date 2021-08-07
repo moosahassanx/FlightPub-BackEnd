@@ -12,7 +12,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
     @Query(value = "INSERT INTO booking " +
             "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.user_id,booking.guest_user_id, booking.airline_code, booking.flight_departure_time, booking.flight_airline_code, booking.flight_flight_number)" +
             "OUTPUT Inserted.book_id " +
-            "VALUES (?, ?2, ?3, ?4, ?5, ?6, CAST(?7 AS DATETIME2), ?8, ?9)", nativeQuery = true)
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, CAST(?7 AS DATETIME2), ?8, ?9)", nativeQuery = true)
     int newBooking(String flightNumber, String paymentComplete, int paymentId, int user_id, int guestUserId, String airlineCode, String flightDepTime, String flightAirlineCode, String flightFlightNumber);
 
 
