@@ -158,6 +158,7 @@ public class UserController {
         User user = userRepository.getDetailsByUserName(userName);
 
         // Add user details to the map with the required key
+        getDetails.put("id", user.getUserId());
         getDetails.put("userName", user.getUserName());
         getDetails.put("firstName", user.getFirstName());
         getDetails.put("lastName", user.getLastName());
