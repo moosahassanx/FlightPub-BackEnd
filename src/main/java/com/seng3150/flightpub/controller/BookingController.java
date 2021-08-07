@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @RestController
 public class BookingController {
 
@@ -49,9 +51,9 @@ public class BookingController {
                    @RequestParam("aCode") String airlineCode,
                    @RequestParam("fACode") String flightAirlineCode,
                    @RequestParam("fDepTime") String flightDepTime,
-                   @RequestParam("ffnumber") String flightFlightnumber) {
+                   @RequestParam("ffnumber") String flightFlightNumber) {
 
-        return bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
+        return bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
 
     }
 
@@ -64,9 +66,9 @@ public class BookingController {
                            @RequestParam("aCode") String airlineCode,
                            @RequestParam("fACode") String flightAirlineCode,
                            @RequestParam("fDepTime") String flightDepTime,
-                           @RequestParam("ffnumber") String flightFlightnumber) {
+                           @RequestParam("ffnumber") String flightFlightNumber) {
 
-        return bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
+        return bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
 
     }
 
@@ -74,14 +76,14 @@ public class BookingController {
     @ResponseBody
     int makeGBooking(@RequestParam("fNumber") String flightNumber,
                      @RequestParam("payComp") String paymentComplete,
-                     @RequestParam("payId") int paymentId,
+                     @RequestParam("payId") int paymentId ,
                      @RequestParam("gUId") int guestUserId,
                      @RequestParam("aCode") String airlineCode,
-                     @RequestParam("fACode") String flightAirlineCode,
                      @RequestParam("fDepTime") String flightDepTime,
-                     @RequestParam("ffnumber") String flightFlightnumber) {
+                     @RequestParam("fACode") String flightAirlineCode,
+                     @RequestParam("FFNumber") String flightFlightNumber) throws ParseException {
 
-        return bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightAirlineCode, flightDepTime, flightFlightnumber);
+        return bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
 
     }
 

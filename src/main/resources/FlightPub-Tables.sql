@@ -204,12 +204,10 @@ create table booking
     guest_user_id               bigint
             references guest_user_account,
     airline_code          nvarchar(100) not null,
-    flight_airline_code   nvarchar(100)   not null,
     flight_departure_time datetime2      not null,
-    flight_flight_number  varchar(255)   not null,
     primary key (book_id, flight_number),
     constraint FK6b3c9jl9kem8r91to5p1r54p8
-        foreign key (flight_airline_code, flight_departure_time, flight_flight_number) references flights
+        foreign key (airline_code, flight_departure_time, flight_number) references flights
 )
 go
 

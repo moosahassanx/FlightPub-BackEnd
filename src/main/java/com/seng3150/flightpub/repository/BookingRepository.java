@@ -9,22 +9,23 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
 
 
 
-   @Query(value = "INSERT INTO booking " +
+    @Query(value = "INSERT INTO booking " +
+            "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.user_id,booking.guest_user_id, booking.airline_code, booking.flight_departure_time, booking.flight_airline_code, booking.flight_flight_number)" +
             "OUTPUT Inserted.book_id " +
-            "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.user_id, booking.guest_user_id, booking.airline_code, booking.flight_airline_code, booking.flight_departure_time, booking.flight_flight_number)" +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)", nativeQuery = true)
-    int newBooking(String flightNumber, String paymentComplete, int paymentId, int userId, int guestUserId, String airlineCode, String flightAirlineCode, String flightDepTime, String flightFlightnumber);
+            "VALUES (?, ?2, ?3, ?4, ?5, ?6, CAST(?7 AS DATETIME2), ?8, ?9)", nativeQuery = true)
+    int newBooking(String flightNumber, String paymentComplete, int paymentId, int user_id, int guestUserId, String airlineCode, String flightDepTime, String flightAirlineCode, String flightFlightNumber);
 
 
     @Query(value = "INSERT INTO booking " +
-            "OUTPUT Inserted.book_id " +
-            "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.user_id, booking.airline_code, booking.flight_airline_code, booking.flight_departure_time, booking.flight_flight_number)" +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, CONVERT(datetime2, ?7), ?8)", nativeQuery = true)
+         "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.user_id, booking.airline_code, booking.flight_departure_time, booking.flight_airline_code, booking.flight_flight_number)" +
+         "OUTPUT Inserted.book_id " +
+         "VALUES (?1, ?2, ?3, ?4, ?5, CAST(?6 AS DATETIME2), ?7, ?8)", nativeQuery = true)
     int addRejestedBooking(String flightNumber, String paymentComplete, int paymentId, int userId, String airlineCode, String flightAirlineCode, String flightDepTime, String flightFlightnumber);
 
     @Query(value = "INSERT INTO booking " +
+            "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.guest_user_id, booking.airline_code, booking.flight_departure_time, booking.flight_airline_code, booking.flight_flight_number)" +
             "OUTPUT Inserted.book_id " +
-            "(booking.flight_number, booking.payment_complete, booking.payment_id, booking.guest_user_id, booking.airline_code, booking.flight_airline_code, booking.flight_departure_time, booking.flight_flight_number)" +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, CAST(?7 AS DATETIME2), ?8)", nativeQuery = true)
-    int makeGBooking(String flightNumber, String paymentComplete, int paymentId, int guestUserId, String airlineCode, String flightAirlineCode, String flightDepTime, String flightFlightnumber);
+            "VALUES (?1, ?2, ?3, ?4, ?5, CAST(?6 AS DATETIME2), ?7, ?8)", nativeQuery = true)
+    int makeGBooking(String flightNumber, String paymentComplete, int paymentId, int guestUserId, String airlineCode, String flightDepTime, String flightAirlineCode, String flightFlightNumber);
+
 }

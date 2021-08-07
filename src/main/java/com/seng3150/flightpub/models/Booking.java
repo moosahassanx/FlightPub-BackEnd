@@ -32,6 +32,17 @@ public class Booking implements Serializable {
     @JoinColumn(name = "guest_user_id", nullable = true)
     private GuestUser guestUser;
 
+    @Id
+    @Column(name = "airline_code", nullable = true)
+    private String  airline_code;
+
+    @Id
+    @Column(name = "flight_number", nullable = false)
+    private String flight_number;
+
+    @Column(name = "payment_complete", nullable = false)
+    private String payment_complete;
+
     @ManyToOne
     private Flights flight;
 
