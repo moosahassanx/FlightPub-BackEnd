@@ -58,13 +58,15 @@ public class BookingController {
                    @RequestParam("fACode") String flightAirlineCode,
                    @RequestParam("fDepTime") String flightDepTime,
                    @RequestParam("FFNumber") String flightFlightNumber,
-                   @RequestParam("DesCode") String desCode) {
+                   @RequestParam("DesCode") String desCode,
+                   @RequestParam("city") String location) {
 
 
         destinationsRepository.updateTimesBooked(desCode);
         int bookingId = bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
         registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
         guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, flightAirlineCode, flightDepTime, flightFlightNumber);
+        userRepository.updateLastLocation(location, userId);
         return bookingId;
     }
 
