@@ -51,7 +51,7 @@ public class BookingController {
                    @RequestParam("aCode") String airlineCode,
                    @RequestParam("fACode") String flightAirlineCode,
                    @RequestParam("fDepTime") String flightDepTime,
-                   @RequestParam("ffnumber") String flightFlightNumber) {
+                   @RequestParam("FFNumber") String flightFlightNumber) {
 
         return bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
 
@@ -66,7 +66,7 @@ public class BookingController {
                            @RequestParam("aCode") String airlineCode,
                            @RequestParam("fACode") String flightAirlineCode,
                            @RequestParam("fDepTime") String flightDepTime,
-                           @RequestParam("ffnumber") String flightFlightNumber) {
+                           @RequestParam("FFNumber") String flightFlightNumber) {
 
         return bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, flightAirlineCode, flightFlightNumber);
 
