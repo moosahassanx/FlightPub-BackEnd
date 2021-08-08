@@ -2,6 +2,7 @@ create table airlines
 (
     airline_code  nvarchar(100) not null
         primary key,
+    sponsored     bit          not null default 0,
     airline_name  varchar(255) not null,
     country_code3 varchar(255) not null
 )
@@ -40,7 +41,8 @@ create table destinations
         constraint [DestinationCountryCode_FK ]
             references country,
     times_booked     int default 0 not null,
-    Tags varchar(264)
+    Tags varchar(264),
+    COVID     bit          not null default 0
 )
 go
 
