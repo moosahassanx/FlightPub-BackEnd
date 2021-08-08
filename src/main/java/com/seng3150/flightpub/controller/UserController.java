@@ -9,6 +9,7 @@ package com.seng3150.flightpub.controller;
 import com.seng3150.flightpub.Services.Discovery;
 import com.seng3150.flightpub.models.User;
 import com.seng3150.flightpub.repository.UserRepository;
+import com.seng3150.flightpub.Services.Discovery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -47,7 +48,7 @@ public class UserController {
     // If exists, gets their last booked location, maps it to the locations lat and long
     // Returns the lat and long to frontend to display on map
     @RequestMapping("/checkExists")
-    public ResponseEntity<?> checkUserExistsByUsername(@RequestParam String username) {
+    public ResponseEntity<?> checkUserExistsByUsername(@RequestParam (required = false, name = "username") String username) throws IOException {
 
         if(!userRepository.existsByUserName(username)) {
             return new ResponseEntity<>("Cant find " + username, HttpStatus.BAD_REQUEST);
@@ -78,12 +79,17 @@ public class UserController {
     @RequestMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody HashMap<String,String> jsonData) {
 
-        List<User> data = userRepository.findByUserNameAndPasswordHash(jsonData.get("userName"), jsonData.get("password"));
+        // getting user details by using findByUserNameAndPasswordHash() method
+        System.out.println("QUERYING FOR " + jsonData.get("userName") + " WITH PASSWORD " + jsonData.get("password"));
+        List<User> data1 = userRepository.findByUserNameAndPasswordHash(jsonData.get("userName"), jsonData.get("password"));
+        System.out.println("RETURNED: " + data1 + "\n\n");
 
-        if(!data.isEmpty()) {
-            return new ResponseEntity<>(data, HttpStatus.OK);
+        // successfully found the user with correct credentials
+        if(!data1.isEmpty()) {
+            return new ResponseEntity<>(data1, HttpStatus.OK);
         }
 
+        // response message depending on the outcome so far
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
     

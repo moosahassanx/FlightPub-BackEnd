@@ -43,6 +43,7 @@ create table destinations
     times_booked     int default 0 not null,
     Tags varchar(264),
     COVID     bit          not null default 0
+
 )
 go
 

@@ -38,6 +38,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
                    "WHERE user_name = ?1", nativeQuery = true)
     User getDetailsByUserName(String userName);
 
+    @Query(value = "SELECT * " +
+            "FROM user_account " +
+            "WHERE user_name = ?1", nativeQuery = true)
     List<User> findByUserNameAndPasswordHash(String userName, String password);
 
     boolean existsByUserName(String user_name);
