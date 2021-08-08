@@ -1,6 +1,6 @@
 /*
     Flights.java
-        - Models the DB table and maps the contraints via annotations
+        - Models the DB table and maps the constraints via annotations
 */
 package com.seng3150.flightpub.models;
 
@@ -25,7 +25,7 @@ public class Flights implements Serializable {
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "airline_code", referencedColumnName = "airline_code",nullable = false, updatable = false)
-    private Airlines airline;
+    private Airlines airlineCode;
 
     @Id
     @Column(name = "flight_number", nullable = false, updatable = false)

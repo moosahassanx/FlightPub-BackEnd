@@ -6,10 +6,7 @@ package com.seng3150.flightpub.models;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -22,12 +19,19 @@ public class Payment implements Serializable {
 
     @Id
     @Column(name = "payment_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = true)
     private Long userId;
 
+    @Column(name = "guest_user_id", nullable = true)
+    private Long guestUserId;
+
+    public Payment() {
+
+    }
 }

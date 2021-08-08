@@ -6,6 +6,7 @@
  */
 package com.seng3150.flightpub.controller;
 
+import com.seng3150.flightpub.Services.Discovery;
 import com.seng3150.flightpub.models.User;
 import com.seng3150.flightpub.repository.UserRepository;
 import com.seng3150.flightpub.Services.Discovery;
@@ -163,6 +164,7 @@ public class UserController {
         User user = userRepository.getDetailsByUserName(userName);
 
         // Add user details to the map with the required key
+        getDetails.put("id", user.getUserId());
         getDetails.put("userName", user.getUserName());
         getDetails.put("firstName", user.getFirstName());
         getDetails.put("lastName", user.getLastName());

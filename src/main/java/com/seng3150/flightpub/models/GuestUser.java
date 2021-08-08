@@ -1,6 +1,6 @@
 /*
-    User.java
-        - Used to model the database user_account table
+    GuestUser.java
+        - Used to model the database guest_user_account table
         - Mapping is used by the @annotations
  */
 
@@ -15,24 +15,11 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user_account")
-public class User implements Serializable {
+@Table(name = "guest_user_account")
+public class GuestUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public User() {
-
-    }
-
-    public User(String userName, String firstName, String lastName, String address, String phoneNumber, String password, byte[] salt) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.salt = salt;
-        this.passwordHash = password;
-    }
 
     @Id
     @JsonIgnore
@@ -40,7 +27,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "email_address", nullable = false)
     private String userName;
 
     @Column(name = "first_name", nullable = false)
@@ -49,30 +36,13 @@ public class User implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "salt", nullable = false)
-    private byte[] salt;
-
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
-
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    @Column(name = "address", nullable = false)
-    private String address;
-    
-    @Column(name = "last_location")
-    private String lastLocation;
 
     @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "booking_list")
     private List<Booking> bookingList;
 
-    public User(String user_name, String first_name, String last_name, String phone_number) {
-    }
-
-    public long getUserId() { return id;
-    }
     public String getUserName() {
         return userName;
     }
@@ -95,14 +65,6 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -111,11 +73,4 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

@@ -1,4 +1,4 @@
-USE FlightPub;
+  USE FlightPub;
 
 UPDATE Availability
 SET departure_time = DATEADD(YEAR, 6, departure_time)

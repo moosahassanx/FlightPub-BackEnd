@@ -5,16 +5,11 @@
 
 package com.seng3150.flightpub.repository;
 
-import com.seng3150.flightpub.models.Destinations;
 import com.seng3150.flightpub.models.Flights;
-import com.seng3150.flightpub.models.Airlines;
-import org.hibernate.annotations.SqlFragmentAlias;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 
 public interface FlightsRepository extends JpaRepository<Flights, String>, JpaSpecificationExecutor<Flights> {

@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class AvailabilityComposite implements Serializable {
 
-    private Airlines airline;
+    private Airlines airlineCode;
     private String flightNumber;
     private Date departureTime;
     private String classCode;

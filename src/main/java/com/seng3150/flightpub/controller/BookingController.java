@@ -5,15 +5,13 @@
 
 package com.seng3150.flightpub.controller;
 
-import com.seng3150.flightpub.models.User;
-import com.seng3150.flightpub.repository.AvailabilityRepository;
-import com.seng3150.flightpub.repository.BookingRepository;
-import com.seng3150.flightpub.repository.FlightsRepository;
-import com.seng3150.flightpub.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.seng3150.flightpub.repository.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import java.text.ParseException;
 
 @RestController
 public class BookingController {
@@ -29,27 +27,88 @@ public class BookingController {
     private final BookingRepository bookingRepository;
     private final FlightsRepository flightsRepository;
     private final UserRepository userRepository;
+    private final DestinationsRepository destinationsRepository;
+    private final GuestUserBookingListRepository guestUserBookingListRepository;
+    private final RegistedUserBookingListRepository registedUserBookingListRepository;
 
     public BookingController(AvailabilityRepository availabilityRepository,
                              BookingRepository bookingRepository,
                              FlightsRepository flightsRepository,
-                             UserRepository userRepository) {
+                             UserRepository userRepository,
+                             DestinationsRepository destinationsRepository,
+                             GuestUserBookingListRepository guestUserBookingListRepository,
+                             RegistedUserBookingListRepository registedUserBookingListRepository) {
         this.availabilityRepository = availabilityRepository;
         this.bookingRepository = bookingRepository;
         this.flightsRepository = flightsRepository;
         this.userRepository = userRepository;
+        this.destinationsRepository = destinationsRepository;
+        this.guestUserBookingListRepository = guestUserBookingListRepository;
+        this.registedUserBookingListRepository = registedUserBookingListRepository;
     }
 
-    /*  Things passed into controller
-           - username           - Flight start date
-           - flight number      - ticket type       
-     */
-    // Testing controller method
-    @RequestMapping(value = "/bookFlight")
-    public ResponseEntity<?> bookFlight(@RequestBody HashMap<String,String> jsonData) {
-        // Grab the user entity, flight will be available,
-        User user = userRepository.getByUserName(jsonData.get("userName"));
-        return null;
+    @RequestMapping("/makeBooking")
+    @ResponseBody
+    int addBooking(@RequestParam("fNumber") String flightNumber,
+                   @RequestParam("payComp") String paymentComplete,
+                   @RequestParam("payId") int paymentId,
+                   @RequestParam("uId") int userId,
+                   @RequestParam("gUId") int guestUserId,
+                   @RequestParam("aCode") String airlineCode,
+                   @RequestParam("fDepTime") String flightDepTime,
+                   @RequestParam("DesCode") String desCode,
+                   @RequestParam("classCode") String classCode,
+                   @RequestParam("ticketCode") String ticketCode) {
+
+
+        destinationsRepository.updateTimesBooked(desCode);
+        int bookingId = bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, airlineCode, flightNumber);
+        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
+        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
+        availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
+        return bookingId;
     }
+
+
+    @RequestMapping("/makeRBooking")
+    @ResponseBody
+    int addRejestedBooking(@RequestParam("fNumber") String flightNumber,
+                           @RequestParam("payComp") String paymentComplete,
+                           @RequestParam("payId") int paymentId,
+                           @RequestParam("uId") int userId,
+                           @RequestParam("aCode") String airlineCode,
+                           @RequestParam("fDepTime") String flightDepTime,
+                           @RequestParam("DesCode") String desCode,
+                           @RequestParam("classCode") String classCode,
+                           @RequestParam("ticketCode") String ticketCode) {
+
+
+        destinationsRepository.updateTimesBooked(desCode);
+        int bookingId = bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, airlineCode, flightNumber);
+        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
+        userRepository.updateLastLocation(desCode, userId);
+        availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
+        return bookingId;
+    }
+
+    @RequestMapping("/makeGBooking")
+    @ResponseBody
+    int makeGBooking(@RequestParam("fNumber") String flightNumber,
+                     @RequestParam("payComp") String paymentComplete,
+                     @RequestParam("payId") int paymentId ,
+                     @RequestParam("gUId") int guestUserId,
+                     @RequestParam("aCode") String airlineCode,
+                     @RequestParam("fDepTime") String flightDepTime,
+                     @RequestParam("DesCode") String desCode,
+                     @RequestParam("classCode") String classCode,
+                     @RequestParam("ticketCode") String ticketCode) throws ParseException {
+
+        destinationsRepository.updateTimesBooked(desCode);
+        int bookingId = bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, airlineCode, flightNumber);
+        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
+        availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
+        return bookingId;
+    }
+
 
 }
