@@ -1,14 +1,18 @@
 /*
     Availability.java
-        - Models the DB table and maps the contraints via annotations
+        - Models the DB table and maps the constraints via annotations
 */
 
 package com.seng3150.flightpub.models;
 
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 
 @Data
 @Entity
@@ -19,9 +23,10 @@ public class Availability implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "airline_code")
-    private Airlines airline;
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "airline_code", referencedColumnName = "airline_code",nullable = false, updatable = false)
+    private Airlines airlineCode;
 
     @Id
     @Column(name = "flight_number", nullable = false)
@@ -29,7 +34,7 @@ public class Availability implements Serializable {
 
     @Id
     @Column(name = "departure_time", nullable = false)
-    private String departureTime;
+    private Timestamp departureTime;
 
     @Id
     @Column(name = "class_code", nullable = false)

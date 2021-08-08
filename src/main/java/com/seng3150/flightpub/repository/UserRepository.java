@@ -49,4 +49,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
                    "FROM user_account " +
                    "WHERE id = ?1", nativeQuery = true)
     List<String> getVisitedLocations(int id);
+
+
+    @Query(value = "UPDATE user_account " +
+            "SET last_location = ?1 " +
+            "OUTPUT Inserted.ID " +
+            "WHERE id = ?2", nativeQuery = true)
+    int updateLastLocation(String location, int id);
 }
