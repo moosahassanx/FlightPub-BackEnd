@@ -26,4 +26,6 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     @Query(value = "update destinations set destinations.times_booked = destinations.times_booked + 1 OUTPUT Inserted.times_booked  where destination_code = ?1 ", nativeQuery = true)
     int updateTimesBooked(String whatever);
 
+    @Query(value = "update destinations set destinations.COVID = ?2 OUTPUT Inserted.times_booked  where destinations.destination_code = ?1 ", nativeQuery = true)
+    int changeStatus(String destCode, int trueOrFalse);
 }
