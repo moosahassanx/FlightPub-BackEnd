@@ -8,6 +8,8 @@ package com.seng3150.flightpub.models;
 
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,9 +41,9 @@ public class GuestUser implements Serializable {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "booking_list")
-    private List<Booking> bookingList;
+//    @NotFound(action= NotFoundAction.IGNORE)
+//    @OneToMany(fetch=FetchType.LAZY, mappedBy = "guest_user_id")
+//    private List<Booking> bookings;
 
     public String getUserName() {
         return userName;
