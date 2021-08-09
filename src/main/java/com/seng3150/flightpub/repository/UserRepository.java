@@ -41,11 +41,25 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Query(value = "SELECT * " +
             "FROM user_account " +
             "WHERE user_name = ?1", nativeQuery = true)
+    List<User> getDetailsByUserName1(String userName);
+
+//    @Query(value = "SELECT * " +
+//            "FROM user_account " +
+//            "WHERE user_name = ?1", nativeQuery = true)
+//    List<User> getDetailsByRequest(String requested);
+
+    @Query(value = "SELECT * " +
+            "FROM user_account ", nativeQuery = true)
+    List<User> getAllUsers();
+
+    @Query(value = "SELECT * " +
+            "FROM user_account " +
+            "WHERE user_name = ?1", nativeQuery = true)
     List<User> findByUserNameAndPasswordHash(String userName, String password);
 
     boolean existsByUserName(String user_name);
     
-    @Query(value = "SELECT last_visited " +
+    @Query(value = "SELECT last_location " +
                    "FROM user_account " +
                    "WHERE id = ?1", nativeQuery = true)
     List<String> getVisitedLocations(int id);

@@ -8,6 +8,9 @@ package com.seng3150.flightpub.models;
 
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -34,6 +37,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.salt = salt;
         this.passwordHash = password;
+        this.userType = "user";
     }
 
     @Id
@@ -66,9 +70,9 @@ public class User implements Serializable {
     @Column(name = "last_location")
     private String lastLocation;
 
-//    @NotFound(action= NotFoundAction.IGNORE)
-//    @OneToMany(fetch=FetchType.LAZY, mappedBy = "user_id")
-//    private List<Booking> bookings;
+    @OneToMany(fetch = FetchType.LAZY)
+    @Column(name = "booking_list")
+    private List<Booking> bookingList;
 
     public User(String user_name, String first_name, String last_name, String phone_number) {
     }
@@ -116,6 +120,8 @@ public class User implements Serializable {
     public String getAddress() {
         return address;
     }
+
+    public String getType() {return userType; }
 
     public void setAddress(String address) {
         this.address = address;
