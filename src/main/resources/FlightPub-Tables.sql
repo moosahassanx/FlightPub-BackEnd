@@ -5,7 +5,6 @@ create table airlines
     sponsored     bit          not null default 0,
     airline_name  varchar(255) not null,
     country_code3 varchar(255) not null,
-    sponsored  bit default 0 not null,
 )
 go
 

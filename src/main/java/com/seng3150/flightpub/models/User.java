@@ -70,6 +70,9 @@ public class User implements Serializable {
     @Column(name = "last_location")
     private String lastLocation;
 
+    @Column(name = "user_type")
+    private String userType;
+
     @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "booking_list")
     private List<Booking> bookingList;

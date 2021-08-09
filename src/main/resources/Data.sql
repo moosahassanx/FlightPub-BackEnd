@@ -372,7 +372,7 @@ VALUES
 
 
 BULK INSERT FlightPub.dbo.Availability
-FROM 'C:\Users\ahmed\Documents\GitHub\SENG3160\FlightPub-BackEnd\src\main\resources\Availabilities.txt'
+FROM 'D:\University\2021\Semester2\SENG3160 - Software Project 2\FlightPub\FlightPub-BackEnd\src\main\resources\Availabilities.txt'
 WITH
 	(
 	FIELDTERMINATOR = ',',
@@ -631,7 +631,7 @@ VALUES
 	('VIE','ORY',1032);
 
 BULK INSERT FlightPub.dbo.flights
-FROM 'C:\Users\ahmed\Documents\GitHub\SENG3160\FlightPub-BackEnd\src\main\resources\Flights.txt'
+FROM 'D:\University\2021\Semester2\SENG3160 - Software Project 2\FlightPub\FlightPub-BackEnd\src\main\resources\Flights.txt'
 WITH
     (
     FIELDTERMINATOR = ',',
@@ -641,7 +641,7 @@ WITH
 
 
 BULK INSERT FlightPub.dbo.price
-FROM 'C:\Users\ahmed\Documents\GitHub\SENG3160\FlightPub-BackEnd\src\main\resources\Price.txt'
+FROM 'D:\University\2021\Semester2\SENG3160 - Software Project 2\FlightPub\FlightPub-BackEnd\src\main\resources\Price.txt'
 WITH
     (
     FIELDTERMINATOR = ',',
@@ -659,5 +659,9 @@ UPDATE FlightPub.dbo.flights SET airline_code =   REPLACE(airline_code ,'
 UPDATE FlightPub.dbo.availability SET airline_code =  REPLACE(airline_code ,'
 ','');
 
+INSERT INTO FlightPub.dbo.user_account (user_name, first_name, last_name, account_type, salt, password_hash, phone_number, address, last_location)
+VALUES
+    ('eatDatPussy445@gmail.com', 'EDP', '445', 'admin', 'random', '$2a$10$5bYKHS7XPY7vw5ZtZKiY4O41vQZvF3TK1rbNIcH3F.TqMncFUUyR2', 04981386485, '69 pedophile rd, atlanta', null),
+    ('keeylanGay@gmail.com', 'keeylan', 'hume', 'agent', 'random', '$2a$10$OgDq4voGW4Gb1ZRDpQqg4OaXo8/QualufHnZRaK1ap1HpRpIRIcie', 04981386485, '29 baumont st hamilton', null);
 
-
+UPDATE FlightPub.dbo.user_account SET account_type='admin' WHERE user_name='eatDatPussy445@gmail.com';
