@@ -28,8 +28,8 @@ public class BookingController {
     private final FlightsRepository flightsRepository;
     private final UserRepository userRepository;
     private final DestinationsRepository destinationsRepository;
-    private final GuestUserBookingListRepository guestUserBookingListRepository;
-    private final RegistedUserBookingListRepository registedUserBookingListRepository;
+//    private final GuestUserBookingListRepository guestUserBookingListRepository;
+//    private final RegistedUserBookingListRepository registedUserBookingListRepository;
 
     public BookingController(AvailabilityRepository availabilityRepository,
                              BookingRepository bookingRepository,
@@ -43,8 +43,8 @@ public class BookingController {
         this.flightsRepository = flightsRepository;
         this.userRepository = userRepository;
         this.destinationsRepository = destinationsRepository;
-        this.guestUserBookingListRepository = guestUserBookingListRepository;
-        this.registedUserBookingListRepository = registedUserBookingListRepository;
+//        this.guestUserBookingListRepository = guestUserBookingListRepository;
+//        this.registedUserBookingListRepository = registedUserBookingListRepository;
     }
 
     @RequestMapping("/makeBooking")
@@ -63,8 +63,8 @@ public class BookingController {
 
         destinationsRepository.updateTimesBooked(desCode);
         int bookingId = bookingRepository.newBooking(flightNumber, paymentComplete, paymentId, userId, guestUserId, airlineCode, flightDepTime, airlineCode, flightNumber);
-        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
-        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
+//        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
+//        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
         availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
         return bookingId;
     }
@@ -85,7 +85,7 @@ public class BookingController {
 
         destinationsRepository.updateTimesBooked(desCode);
         int bookingId = bookingRepository.addRejestedBooking(flightNumber, paymentComplete, paymentId, userId, airlineCode, flightDepTime, airlineCode, flightNumber);
-        registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
+ //       registedUserBookingListRepository.updateRegistedBookingList(userId, bookingId, airlineCode, flightDepTime, flightNumber);
         userRepository.updateLastLocation(desCode, userId);
         availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
         return bookingId;
@@ -105,7 +105,7 @@ public class BookingController {
 
         destinationsRepository.updateTimesBooked(desCode);
         int bookingId = bookingRepository.makeGBooking(flightNumber, paymentComplete, paymentId, guestUserId, airlineCode, flightDepTime, airlineCode, flightNumber);
-        guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
+ //       guestUserBookingListRepository.updateGuestBookingList(guestUserId, bookingId, airlineCode, flightDepTime, flightNumber);
         availabilityRepository.updateAvailability(airlineCode, flightNumber, flightDepTime, classCode, ticketCode);
         return bookingId;
     }

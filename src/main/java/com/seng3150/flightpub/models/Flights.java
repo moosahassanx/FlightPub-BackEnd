@@ -67,8 +67,8 @@ public class Flights implements Serializable {
     @Column(name = "duration_second_leg")
     private Integer durationSecondLeg;
 
-    @NotFound(action= NotFoundAction.IGNORE)
-    @OneToMany(fetch=FetchType.LAZY, mappedBy = "flight")
-    private List<Booking> bookings;
+//    @NotFound(action= NotFoundAction.IGNORE)
+//    @OneToMany(fetch=FetchType.LAZY, mappedBy = "flight")
+//    private List<Booking> bookings;
 
 }
