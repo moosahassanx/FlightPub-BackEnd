@@ -184,7 +184,7 @@ create table user_account
     first_name    varchar(255)                 not null,
     last_name     varchar(255)                 not null,
     account_type  varchar(255) default 'basic' not null,
-    salt          nvarchar(50)                      not null,
+    salt          nvarchar(50),
     password_hash varchar(255)                 not null,
     phone_number  varchar(50)                      not null,
     address       varchar(255)                 not null,
