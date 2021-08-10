@@ -19,6 +19,10 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     @Query(value = "SELECT * FROM destinations ", nativeQuery = true)
     List<Destinations> findDestinations();
 
+    //  Return non-covid destinations.
+    @Query(value = "SELECT * FROM destinations WHERE COVID='false'", nativeQuery = true)
+    List<Destinations> findNonCovidDestinations();
+
     // Selects the top 10 destinations that have been books more than once
     // Orders by highest to lowers
     // removed "WHERE destinations.times_booked > 0 ORDER BY destinations.times_booked DESC" from query
