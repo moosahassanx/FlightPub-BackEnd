@@ -22,7 +22,6 @@ public interface PriceRepository extends JpaRepository<Price, String>, JpaSpecif
             "FROM price "+
             "WHERE flight_number = ?1 " +
             "AND class_code = ?2 " +
-            "AND ticket_code = ?3 " +
-            "AND  CAST(?4 AS DATETIME2) BETWEEN start_date AND end_date", nativeQuery = true)
-    Price getTicketPrice(String newFlightNum, String newClassCode, String ticketCode, String newDates);
+            "AND  CAST(?3 AS DATETIME2) BETWEEN start_date AND end_date", nativeQuery = true)
+    List<Price> getTicketPrice(String newFlightNum, String newClassCode, String newDates);
 }

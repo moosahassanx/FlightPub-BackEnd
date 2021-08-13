@@ -24,10 +24,9 @@ public class PriceController {
     }
 
     @RequestMapping("/getticketprice")
-    Price getTicketPrice(@RequestParam("fnum") String flightNum,
+    List<Price> getTicketPrice(@RequestParam("fnum") String flightNum,
                                @RequestParam("tclass") String classCode,
-                               @RequestParam("tCode") String tCode,
                                @RequestParam("depdate") String date){
-        return priceRepository.getTicketPrice(flightNum, classCode, tCode, date);
+        return priceRepository.getTicketPrice(flightNum, classCode, date);
     }
 }
