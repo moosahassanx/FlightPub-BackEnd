@@ -15,8 +15,6 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    User getByUserName(String userName);
-
     @Modifying
     @Query(value = "UPDATE user_account " +
                    "SET password_hash = ?2 " +
@@ -33,6 +31,12 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
                    "WHERE user_name = ?1", nativeQuery = true)
     void updateUserDetails(String user, String firstName, String lastName, String phoneNumber, String address);
 
+    @Modifying
+    @Query(value = "UPDATE user_account " +
+            "SET account_type = ?1 " +
+            "WHERE user_name = ?2", nativeQuery = true)
+    void promoteUser(String newType, String username);
+
     @Query(value = "SELECT * " +
                    "FROM user_account " +
                    "WHERE user_name = ?1", nativeQuery = true)
@@ -42,11 +46,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "FROM user_account " +
             "WHERE user_name = ?1", nativeQuery = true)
     List<User> getDetailsByUserName1(String userName);
-
-//    @Query(value = "SELECT * " +
-//            "FROM user_account " +
-//            "WHERE user_name = ?1", nativeQuery = true)
-//    List<User> getDetailsByRequest(String requested);
 
     @Query(value = "SELECT * " +
             "FROM user_account ", nativeQuery = true)
@@ -70,4 +69,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "OUTPUT Inserted.ID " +
             "WHERE id = ?2", nativeQuery = true)
     int updateLastLocation(String location, int id);
+
 }

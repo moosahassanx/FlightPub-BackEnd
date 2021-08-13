@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,7 +101,7 @@ public class UserController {
             return new ResponseEntity<>(data1, HttpStatus.OK);
         }
 
-        // response message depending on the outcome so far
+        // response message depending on the outcome
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
@@ -111,14 +112,6 @@ public class UserController {
         List<User> usersList = userRepository.getAllUsers();
         return usersList;
     }
-
-    // TODO (august 7, moosahassan): send back the entire users list that have requested for higher access
-//    @RequestMapping("/getUserPermissions")
-//    public List<User> getUserDetails() {
-//        // legit 2 lines cuz what more do you want?
-//        List<User> usersList = userRepository.getAllUsers();
-//        return usersList;
-//    }
     
     // Register user, mapped as form data to a map<Key,Data>
     // Pulls data from body request, Checks if this email already exists
@@ -181,6 +174,20 @@ public class UserController {
                                          jsonData.get("address"));
 
         return new ResponseEntity<>("Details changed successfully", HttpStatus.OK);
+    }
+
+    // promote the user depending on the username passed as a parameter
+    @Transactional
+    @RequestMapping(value = "/promoteUser",
+            method = RequestMethod.PUT)
+    public ResponseEntity<?> promoteUser(@RequestBody HashMap<String, String> jsonData) {
+
+        System.out.println("===========================================================");
+        System.out.println("ATTEMPTING TO PROMOTE USER: " + jsonData.get("userName") + " TO " + jsonData.get("userType"));
+
+        userRepository.promoteUser(jsonData.get("userType"), jsonData.get("userName"));
+
+        return new ResponseEntity<>("User successfully promoted", HttpStatus.OK);
     }
 
     // Get user details for account management settings
