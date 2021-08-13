@@ -70,4 +70,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "WHERE id = ?2", nativeQuery = true)
     int updateLastLocation(String location, int id);
 
+    @Modifying
+    @Query(value = "DELETE FROM user_account " +
+            "WHERE user_name = ?1", nativeQuery = true)
+    void removeUser(String username);
+
 }

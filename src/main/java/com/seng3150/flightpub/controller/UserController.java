@@ -187,7 +187,7 @@ public class UserController {
 
         userRepository.promoteUser(jsonData.get("userType"), jsonData.get("userName"));
 
-        return new ResponseEntity<>("User successfully promoted", HttpStatus.OK);
+        return new ResponseEntity<>("User " + jsonData.get("userName") + " successfully promoted", HttpStatus.OK);
     }
 
     // Get user details for account management settings
@@ -230,5 +230,19 @@ public class UserController {
 
         return new String(hash);
 
+    }
+
+    // remove the user from the database completely
+    @Transactional
+    @RequestMapping(value = "/removeUser",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> removeUser(@RequestBody HashMap<String, String> jsonData) {
+        System.out.println("===============================================================");
+        System.out.println("ATTEMPTING TO REMOVE USER " + jsonData.get("userName") + " FROM DB");
+
+        userRepository.removeUser(jsonData.get("userName"));
+
+        return new ResponseEntity<>("User" + jsonData.get("userName") + "successfully removed", HttpStatus.OK);
     }
 }
