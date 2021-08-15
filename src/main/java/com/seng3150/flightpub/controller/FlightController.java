@@ -33,7 +33,15 @@ public class FlightController {
 
         return flightsRepository.findFlights(depart, arrive, date);
     }
+    //getFlexFlights?from=${destFrom}&to=${destTo}&dep1=${depStartDate.toJSON()}&dep2=${depEndDate.toJSON()}
+    @RequestMapping("/getFlexFlights")
+    List<Flights> findAllDestinations(@RequestParam("from") String depart,
+                                      @RequestParam("to") String arrive,
+                                      @RequestParam("dep1") String date,
+                                        @RequestParam("dep2") String date2){
 
+        return flightsRepository.findFlexFlights(depart, arrive, date, date2);
+    }
     // GET REQUEST
     // URI mapping to get trendingflights - key = destination, value = user selected destination
     // Maps the users selected destination with the EDestination to get the destination code
