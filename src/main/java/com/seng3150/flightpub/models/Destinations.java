@@ -28,10 +28,10 @@ public class Destinations implements Serializable {
     @JoinColumn(name = "country_code3")
     private Country countryCode3;
 
-    @Column(name = "times_booked", nullable = false)
+    @Column(name = "times_booked", nullable = true)
     private Integer timesBooked;
 
-    @Column(name = "COVID", nullable = false)
+    @Column(name = "COVID", nullable = true)
     private boolean COVID;
 
     @Column(name = "Tags", nullable = false)
