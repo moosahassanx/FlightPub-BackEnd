@@ -34,4 +34,7 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
 
     @Query(value = "update destinations set destinations.COVID = ?2 OUTPUT Inserted.times_booked  where destinations.destination_code = ?1 ", nativeQuery = true)
     int changeStatus(String destCode, int trueOrFalse);
+
+    @Query(value = "SELECT TOP 3 * FROM destinations ORDER BY destinations.times_booked DESC", nativeQuery = true)
+    List<Destinations> getTop3Destinations();
 }

@@ -1,6 +1,7 @@
 package com.seng3150.flightpub.repository;
 
 import com.seng3150.flightpub.models.Booking;
+import com.seng3150.flightpub.models.Destinations;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
