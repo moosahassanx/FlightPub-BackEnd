@@ -44,4 +44,22 @@ public class FlightController {
         String code = EDestinations.DestinationCodes.fromString(destination);
         return flightsRepository.getTrendingFlights(code, "2020-09-01","2020-09-25");
     }
+
+    @RequestMapping("/getflight")
+    List<Flights> getFlight(@RequestParam("1") String airline_code,
+                            @RequestParam("2") String destination_code,
+                            @RequestParam("3") String date_from,
+                            @RequestParam("4") String date_to) {
+
+        return flightsRepository.findFlight(airline_code, destination_code, date_from, date_to);
+    }
+
+    @RequestMapping("/findFlightNumber")
+    String findFlightNumber(@RequestParam("1") String airline_code,
+                            @RequestParam("2") String destination_code,
+                            @RequestParam("3") String date_from,
+                            @RequestParam("4") String date_to) {
+
+        return flightsRepository.findFlightNumber(airline_code, destination_code, date_from, date_to);
+    }
 }

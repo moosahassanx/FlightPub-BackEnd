@@ -7,13 +7,17 @@ package com.seng3150.flightpub.controller;
 
 import com.seng3150.flightpub.models.Destinations;
 import com.seng3150.flightpub.repository.DestinationsRepository;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;           // unused but leave this here anyway
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class DestinationsController {
+public class  DestinationsController {
 
     private final DestinationsRepository destinationsRepository;
 
@@ -34,4 +38,19 @@ public class DestinationsController {
 
         return destinationsRepository.findDestinationName();
     }
+
+    @RequestMapping("/desCovid")
+    @ResponseBody
+    int changeStatus(@RequestParam("destCode") String destCode,
+                     @RequestParam("trueOrFalse") int trueOrFalse) {
+
+        return destinationsRepository.changeStatus(destCode,trueOrFalse);
+    }
+
+    @RequestMapping("/trendingDestinations")
+     List<Destinations> findTrending() {
+
+        return destinationsRepository.findTrending();
+    }
+
 }

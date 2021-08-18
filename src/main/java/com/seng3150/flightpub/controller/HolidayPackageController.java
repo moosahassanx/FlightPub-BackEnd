@@ -7,7 +7,9 @@ package com.seng3150.flightpub.controller;
 
 import com.seng3150.flightpub.models.HolidayPackage;
 import com.seng3150.flightpub.repository.HolidayPackageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -54,5 +56,20 @@ public class HolidayPackageController {
     List<HolidayPackage> findAllBusinessHolidayPackages() {
 
         return holidayPackageRepository.findBusinessHolidayPackages();
+    }
+
+    // Returns the list of recommended holiday packages
+    @RequestMapping("/getRecommendedHolidayPackages")
+    List<HolidayPackage> findRecommendedHolidayPackages(@RequestParam("1") String rd1,
+                                                        @RequestParam("2") String rd2) {
+
+        return holidayPackageRepository.findRecommendedHolidayPackages(rd1, rd2);
+    }
+
+    // Returns the list of holiday packages targeted at business travellers
+    @RequestMapping("/getRecommended")
+    List<HolidayPackage> findRecommended() {
+
+        return holidayPackageRepository.findRecommended();
     }
 }
