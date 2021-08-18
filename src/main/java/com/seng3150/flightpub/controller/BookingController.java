@@ -2,7 +2,7 @@
     CountryController.java
         - Not used, will be extended to implement the user booking selected flights
  */
-/*
+
 package com.seng3150.flightpub.controller;
 
 import com.seng3150.flightpub.models.Booking;
@@ -120,4 +120,3 @@ public class BookingController {
 
 
 }
-*/
