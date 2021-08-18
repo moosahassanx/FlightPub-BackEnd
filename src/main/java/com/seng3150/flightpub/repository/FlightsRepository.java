@@ -5,16 +5,11 @@
 
 package com.seng3150.flightpub.repository;
 
-import com.seng3150.flightpub.models.Destinations;
 import com.seng3150.flightpub.models.Flights;
-import com.seng3150.flightpub.models.Airlines;
-import org.hibernate.annotations.SqlFragmentAlias;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 
 public interface FlightsRepository extends JpaRepository<Flights, String>, JpaSpecificationExecutor<Flights> {
@@ -47,5 +42,18 @@ public interface FlightsRepository extends JpaRepository<Flights, String>, JpaSp
     List<Flights> findFlights(String from, String to, String date);
 //    List<String> searchFlightByDestinationAndDates(String depart, String arrival,
 //                                                   String departDate, String arriveDate);
-
+    @Query(value = "SELECT TOP 1 * " +
+                    "FROM flights " +
+                    "WHERE airline_code = ?1 " +
+                    "AND destination_Code = ?2 " +
+                    "AND departure_time BETWEEN ?3 AND ?4", nativeQuery = true)
+    List<Flights> findFlight(String airline_code, String destination_code, String date_from, String date_to);
+    
+    
+    @Query(value = "SELECT TOP 1 flight_number " +
+                    "FROM flights " +
+                    "WHERE airline_code = ?1 " +
+                    "AND destination_Code = ?2 " +
+                    "AND departure_time BETWEEN ?3 AND ?4", nativeQuery = true)
+    String findFlightNumber(String airline_code, String destination_code, String date_from, String date_to);
 }

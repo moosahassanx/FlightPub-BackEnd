@@ -34,4 +34,11 @@ public interface HolidayPackageRepository extends JpaRepository<HolidayPackage, 
     @Query(value = "SELECT * FROM holiday_package WHERE target_user = 'business' ", nativeQuery = true)
     List<HolidayPackage> findBusinessHolidayPackages(); 
 
+    // Selects all recommended holiday packages
+    @Query(value = "SELECT * FROM holiday_package WHERE destination_code = ?1 OR destination_code = ?2 ", nativeQuery = true)
+    List<HolidayPackage> findRecommendedHolidayPackages(String rd1, String rd2);
+
+    @Query(value = "SELECT * FROM holiday_package WHERE target_user = 'all' ", nativeQuery = true)
+    List<HolidayPackage> findRecommended(); 
+
 }
