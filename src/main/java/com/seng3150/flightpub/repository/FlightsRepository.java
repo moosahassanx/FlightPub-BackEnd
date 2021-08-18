@@ -34,13 +34,27 @@ public interface FlightsRepository extends JpaRepository<Flights, String>, JpaSp
 //            "AND flights.destination_Code = ?2 " +
 //            "AND datediff(day, flights.departure_time, ?3) = 0"
 
-    @Query(value = "SELECT * " +
-                    "FROM flights " +
-                    "WHERE flights.departure_Code = ?1 " +
-                    "AND flights.destination_Code = ?2 " +
-                    "AND datediff(day, flights.departure_time, ?3) = 0", nativeQuery = true)
+    @Query(value = "SELECT f.*" +
+            "FROM flights f " +
+            "FULL OUTER JOIN airlines a ON a.airline_code = f.airline_code " +
+            "FULL OUTER JOIN destinations d ON f.destination_code = d.destination_code " +
+            "WHERE f.departure_Code = ?1 " +
+            "AND f.destination_Code = ?2 " +
+            "AND datediff(day, f.departure_time, ?3) = 0 " +
+            "AND  d.COVID = 0 " +
+            "ORDER BY a.sponsored DESC", nativeQuery = true)
     List<Flights> findFlights(String from, String to, String date);
 //    List<String> searchFlightByDestinationAndDates(String depart, String arrival,
 //                                                   String departDate, String arriveDate);
+    @Query(value = "SELECT f.*" +
+            "FROM flights f " +
+            "FULL OUTER JOIN airlines a ON a.airline_code = f.airline_code " +
+            "FULL OUTER JOIN destinations d ON f.destination_code = d.destination_code " +
+            "WHERE f.departure_Code = ?1 " +
+            "AND f.destination_Code = ?2 " +
+            "AND f.departure_time BETWEEN ?3 AND ?4 " +
+            "AND  d.COVID = 0 " +
+            "ORDER BY a.sponsored DESC", nativeQuery = true)
+    List<Flights> findFlexFlights(String depart, String arrive, String date, String date2);
 
 }
