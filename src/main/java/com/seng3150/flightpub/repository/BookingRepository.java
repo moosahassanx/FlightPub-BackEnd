@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpecificationExecutor<Booking> {
 
 
@@ -28,4 +30,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
             "VALUES (?1, ?2, ?3, ?4, ?5, CAST(?6 AS DATETIME2), ?7, ?8)", nativeQuery = true)
     int makeGBooking(String flightNumber, String paymentComplete, int paymentId, int guestUserId, String airlineCode, String flightDepTime, String flightAirlineCode, String flightFlightNumber);
 
+    @Query(value ="SELECT * " +
+            "FROM booking " +
+            "WHERE booking.user_id = ?1 ", nativeQuery = true)
+    List<Booking> foundBookings(String userId);
 }
