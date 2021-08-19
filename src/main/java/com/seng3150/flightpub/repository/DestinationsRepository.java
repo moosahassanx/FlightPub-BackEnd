@@ -26,7 +26,7 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     // Selects the top 10 destinations that have been books more than once
     // Orders by highest to lowers
     // removed "WHERE destinations.times_booked > 0 ORDER BY destinations.times_booked DESC" from query
-    @Query(value = "SELECT TOP 10 airport FROM destinations ", nativeQuery = true)
+    @Query(value = "SELECT TOP 10 airport FROM destinations ORDER BY destinations.times_booked DESC ", nativeQuery = true)
     List<String> findDestinationName();
 
     @Query(value = "update destinations set destinations.times_booked = destinations.times_booked + 1 OUTPUT Inserted.times_booked  where destination_code = ?1 ", nativeQuery = true)
