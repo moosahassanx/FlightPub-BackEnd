@@ -5,7 +5,6 @@
 
 package com.seng3150.flightpub.controller;
 
-import com.seng3150.flightpub.models.Booking;
 import com.seng3150.flightpub.repository.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
-import java.util.List;
 
 @RestController
 public class BookingController {
@@ -112,10 +110,16 @@ public class BookingController {
         return bookingId;
     }
 
-    @RequestMapping("/findBookings")
-    @ResponseBody
-    List<Booking> foundBookings(@RequestParam("userId") String userId) throws ParseException {
-        return bookingRepository.foundBookings(userId);
+    @RequestMapping("/makeNewBooking")
+    int makeNewBooking(@RequestParam("1") String flight_number,
+                        @RequestParam("2") String payment_complete,
+                        @RequestParam("3") int userId,
+                        @RequestParam("4") String airline_code,
+                        @RequestParam("5") String flight_departure_time,
+                        @RequestParam("6") String flight_airline_code,
+                        @RequestParam("7") String flight_flight_number) {
+        int bookingId = bookingRepository.makeNewBooking(flight_number, payment_complete, userId, airline_code, flight_departure_time, flight_airline_code, flight_flight_number);
+       return bookingId;
     }
 
 

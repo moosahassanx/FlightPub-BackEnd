@@ -33,15 +33,7 @@ public class FlightController {
 
         return flightsRepository.findFlights(depart, arrive, date);
     }
-    //getFlexFlights?from=${destFrom}&to=${destTo}&dep1=${depStartDate.toJSON()}&dep2=${depEndDate.toJSON()}
-    @RequestMapping("/getFlexFlights")
-    List<Flights> findAllDestinations(@RequestParam("from") String depart,
-                                      @RequestParam("to") String arrive,
-                                      @RequestParam("dep1") String date,
-                                        @RequestParam("dep2") String date2){
 
-        return flightsRepository.findFlexFlights(depart, arrive, date, date2);
-    }
     // GET REQUEST
     // URI mapping to get trendingflights - key = destination, value = user selected destination
     // Maps the users selected destination with the EDestination to get the destination code
@@ -51,5 +43,23 @@ public class FlightController {
         // Maps the destination to the destination code for easier database mapping via enum class
         String code = EDestinations.DestinationCodes.fromString(destination);
         return flightsRepository.getTrendingFlights(code, "2020-09-01","2020-09-25");
+    }
+
+    @RequestMapping("/getflight")
+    List<Flights> getFlight(@RequestParam("1") String airline_code,
+                            @RequestParam("2") String destination_code,
+                            @RequestParam("3") String date_from,
+                            @RequestParam("4") String date_to) {
+
+        return flightsRepository.findFlight(airline_code, destination_code, date_from, date_to);
+    }
+
+    @RequestMapping("/findFlightNumber")
+    String findFlightNumber(@RequestParam("1") String airline_code,
+                            @RequestParam("2") String destination_code,
+                            @RequestParam("3") String date_from,
+                            @RequestParam("4") String date_to) {
+
+        return flightsRepository.findFlightNumber(airline_code, destination_code, date_from, date_to);
     }
 }

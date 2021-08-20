@@ -31,14 +31,7 @@ public class  DestinationsController {
 
         return destinationsRepository.findDestinations();
     }
-
-    // Returns a list of all destinations currently FlightPub offers
-    @RequestMapping("/getNonCovidDestinations")
-    List<Destinations> findAllNonCovidDestinations() {
-
-        return destinationsRepository.findNonCovidDestinations();
-    }
-
+    
     // Returns the top 10 destinations being booked currently
     @RequestMapping("/destinationtrending")
     List<String> findTop10ByTimesBookedOrderByTimesBooked() {
@@ -52,6 +45,12 @@ public class  DestinationsController {
                      @RequestParam("trueOrFalse") int trueOrFalse) {
 
         return destinationsRepository.changeStatus(destCode,trueOrFalse);
+    }
+
+    @RequestMapping("/trendingDestinations")
+     List<Destinations> findTrending() {
+
+        return destinationsRepository.findTrending();
     }
 
 }
