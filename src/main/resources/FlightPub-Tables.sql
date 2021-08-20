@@ -2,9 +2,9 @@ create table airlines
 (
     airline_code  nvarchar(100) not null
         primary key,
-    sponsored     bit           default 0,
+    sponsored     bit          not null default 0,
     airline_name  varchar(255) not null,
-    country_code3 varchar(255) not null,
+    country_code3 varchar(255) not null
 )
 go
 
@@ -15,7 +15,7 @@ create table guest_user_account
     email_address     varchar(255)                 not null,
     first_name    varchar(255)                     not null,
     last_name     varchar(255)                     not null,
-    phone_number  varchar(50)                      not null,
+    phone_number  varchar(50)                      not null
 )
 go
 
@@ -40,9 +40,9 @@ create table destinations
     country_code3    varchar(255)  not null
         constraint [DestinationCountryCode_FK ]
             references country,
-    times_booked     int default 0 ,
+    times_booked     int default 0 not null,
     Tags varchar(264),
-    COVID     bit           default 0
+    COVID     bit          not null default 0
 
 )
 go
@@ -140,13 +140,11 @@ create table availability
 (
 
     airline_code                nvarchar(100) not null
-        constraint FKi0nsfko1j6md0y0w0y4o2mm9r
             references airlines,
     flight_number               varchar(255) not null,
     departure_time              DATETIME2 not null,
     class_code                  varchar(255) not null,
     ticket_code                 varchar(255) not null
-        constraint FK4ct6y2b43nwxue9cgnp3yhxyv
             references ticket_type,
     number_available_seats_leg1 int          not null,
     number_available_seats_leg2 int,
@@ -156,16 +154,10 @@ go
 
 create table price
 (
-    airline_code  nvarchar(100)   not null
-        constraint PriceAirlineCode_FK
-            references airlines,
+    airline_code  nvarchar(100)   not null,
     flight_number varchar(15)    not null,
-    class_code    varchar(255)   not null
-        constraint PriceClassCode_FK
-            references ticket_class,
-    ticket_code   varchar(255)   not null
-        constraint PriceTicketCode_FK
-            references ticket_type,
+    class_code    varchar(255)   not null,
+    ticket_code   varchar(255)   not null,
     start_date    DATETIME2       not null,
     end_date      DATETIME2       not null,
     total_price   decimal(10, 2) not null,
@@ -226,5 +218,25 @@ create table user_account_booking_list
     constraint UK_33sg3qys5ekt8cgj7lhlsna3m
         unique (booking_list_book_id, booking_list_flight_airline_code, booking_list_flight_departure_time,
                 booking_list_flight_flight_number)
+)
+go
+
+create table holiday_package
+(
+    holiday_package_id      int             not null,
+    airline_code            nvarchar(100)    not null,
+    airline_name            varchar(255)    not null,
+    destination_code        varchar(255)    not null,
+    airport                 varchar(255)    not null,
+    discount_percentage     int             not null,
+    hotel_name              varchar(255),
+    hotel_star_rating       int,
+    hotel_description       varchar(255),
+    package_start_datetime  datetime2       not null,
+    package_end_datetime    datetime2       not null,
+    target_user             varchar(255)    not null,
+    primary key (holiday_package_id),
+    CONSTRAINT holiday_package_airline_code_FK FOREIGN KEY (airline_code) REFERENCES airlines (airline_code),
+    CONSTRAINT holiday_package_destination_code_FK FOREIGN KEY (destination_code) REFERENCES destinations (destination_code)
 )
 go
