@@ -5,8 +5,8 @@
 
 package com.seng3150.flightpub.controller;
 
-//import com.seng3150.flightpub.models.HolidayPackage;
-//import com.seng3150.flightpub.repository.HolidayPackageRepository;
+import com.seng3150.flightpub.models.HolidayPackage;
+import com.seng3150.flightpub.repository.HolidayPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 public class HolidayPackageController {
-/*
+
     private final HolidayPackageRepository holidayPackageRepository;
 
     public HolidayPackageController(HolidayPackageRepository holidayPackageRepository) {
@@ -72,5 +72,4 @@ public class HolidayPackageController {
 
         return holidayPackageRepository.findRecommended();
     }
-    */
 }
