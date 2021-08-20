@@ -19,14 +19,10 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     @Query(value = "SELECT * FROM destinations ", nativeQuery = true)
     List<Destinations> findDestinations();
 
-    //  Return non-covid destinations.
-    @Query(value = "SELECT * FROM destinations WHERE COVID='false'", nativeQuery = true)
-    List<Destinations> findNonCovidDestinations();
-
     // Selects the top 10 destinations that have been books more than once
     // Orders by highest to lowers
     // removed "WHERE destinations.times_booked > 0 ORDER BY destinations.times_booked DESC" from query
-    @Query(value = "SELECT TOP 10 airport FROM destinations ORDER BY destinations.times_booked DESC ", nativeQuery = true)
+    @Query(value = "SELECT TOP 10 airport FROM destinations ", nativeQuery = true)
     List<String> findDestinationName();
 
     @Query(value = "update destinations set destinations.times_booked = destinations.times_booked + 1 OUTPUT Inserted.times_booked  where destination_code = ?1 ", nativeQuery = true)
@@ -36,6 +32,7 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     @Query(value = "update destinations set destinations.COVID = ?2 OUTPUT Inserted.times_booked  where destinations.destination_code = ?1 ", nativeQuery = true)
     int changeStatus(String destCode, int trueOrFalse);
 
-    @Query(value = "SELECT TOP 3 * FROM destinations ORDER BY destinations.times_booked DESC", nativeQuery = true)
-    List<Destinations> getTop3Destinations();
+    // get top 2 trending 
+    @Query(value = "SELECT TOP 2 * FROM destinations ORDER BY times_booked DESC", nativeQuery = true)
+    List<Destinations> findTrending();
 }
