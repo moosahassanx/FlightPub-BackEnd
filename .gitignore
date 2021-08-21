@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/Data.sql
+src/main/resources/UpdateDates.sql
+src/main/resources/application.properties
+src/main/resources/UpdateDates.sql

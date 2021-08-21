@@ -245,3 +245,16 @@ create table holiday_package
     CONSTRAINT holiday_package_destination_code_FK FOREIGN KEY (destination_code) REFERENCES destinations (destination_code)
 )
 go
+
+create table wishlist
+(
+	wishlist_id			bigint identity,
+	user_id				bigint
+		constraint wishlist_user_id_FK
+			references user_account,
+	country_code3          varchar(255)
+		constraint wishlist_country_code3_FK
+			references country,
+	primary key (wishlist_id, user_id, country_code3)
+)
+go
