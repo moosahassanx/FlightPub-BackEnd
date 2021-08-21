@@ -40,9 +40,9 @@ create table destinations
     country_code3    varchar(255)  not null
         constraint [DestinationCountryCode_FK ]
             references country,
-    times_booked     int default 0 not null,
+    times_booked     int default 0,
     Tags varchar(264),
-    COVID     bit          not null default 0
+    COVID     bit default 0
 
 )
 go

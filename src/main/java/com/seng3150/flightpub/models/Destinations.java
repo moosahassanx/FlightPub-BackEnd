@@ -34,7 +34,7 @@ public class Destinations implements Serializable {
     @Column(name = "COVID", nullable = true)
     private boolean COVID;
 
-    @Column(name = "Tags", nullable = false)
+    @Column(name = "Tags", nullable = true)
     private String Tags;
 
 }
