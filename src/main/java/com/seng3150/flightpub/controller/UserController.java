@@ -112,6 +112,14 @@ public class UserController {
         List<User> usersList = userRepository.getAllUsers();
         return usersList;
     }
+
+    // send back all the users in the list that requested for promotion
+    @RequestMapping("/getUserRequests")
+    public List<User> getUserRequests() {
+        // legit 2 lines cuz what more do you want?
+        List<User> usersList = userRepository.getAllUserRequests();
+        return usersList;
+    }
     
     // Register user, mapped as form data to a map<Key,Data>
     // Pulls data from body request, Checks if this email already exists
@@ -183,11 +191,36 @@ public class UserController {
     public ResponseEntity<?> promoteUser(@RequestBody HashMap<String, String> jsonData) {
 
         System.out.println("===========================================================");
-        System.out.println("ATTEMPTING TO PROMOTE USER: " + jsonData.get("userName") + " TO " + jsonData.get("userType"));
 
-        userRepository.promoteUser(jsonData.get("userType"), jsonData.get("userName"));
+        String requestingFor = userRepository.getUserRequestingFor(jsonData.get("userName"));
+        System.out.println("THIS USER IS REQUESTING FOR: " + requestingFor);
+
+        System.out.println("ATTEMPTING TO PROMOTE USER: " + jsonData.get("userName") + " TO " + requestingFor);
+
+        userRepository.promoteUser(requestingFor, jsonData.get("userName"));
 
         return new ResponseEntity<>("User " + jsonData.get("userName") + " successfully promoted", HttpStatus.OK);
+    }
+
+    // a user has requested for a higher position (store it for further approval by administrators)
+    @Transactional
+    @RequestMapping(value = "/addToRequestList",
+            method = RequestMethod.PUT)
+    public ResponseEntity<?> addToRequestList(@RequestBody HashMap<String, String> jsonData) {
+
+        System.out.println("============================================================");
+
+        System.out.println("ATTEMPTING TO ADD USER TO REQUEST LIST");
+
+        System.out.println("userName: " + jsonData.get("userName"));
+        System.out.println("why: " + jsonData.get("why"));
+        System.out.println("referencing: " + jsonData.get("referencing"));
+        System.out.println("experience: " + jsonData.get("experience"));
+        System.out.println("requesting_for: " + jsonData.get("requesting_for"));
+
+        userRepository.addUserToRequestList(jsonData.get("userName"), jsonData.get("why"), jsonData.get("referencing"), jsonData.get("experience"), jsonData.get("requesting_for"));
+
+        return new ResponseEntity<>("User " + jsonData.get("userName") + " successfully added to list", HttpStatus.OK);
     }
 
     // Get user details for account management settings
@@ -245,4 +278,8 @@ public class UserController {
 
         return new ResponseEntity<>("User" + jsonData.get("userName") + "successfully removed", HttpStatus.OK);
     }
+
+
+
+
 }

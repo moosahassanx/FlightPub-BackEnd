@@ -180,7 +180,12 @@ create table user_account
     password_hash varchar(255)                 not null,
     phone_number  varchar(50)                      not null,
     address       varchar(255)                 not null,
-    last_location varchar(255) 
+    last_location varchar(255),
+    requesting    BIT                           DEFAULT 0,
+    why           VARCHAR(255),
+    referencing   VARCHAR(255),
+    experience    VARCHAR(255),
+    requesting_for VARCHAR(255),
 )
 go
 

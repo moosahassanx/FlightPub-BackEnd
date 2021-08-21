@@ -33,9 +33,25 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Modifying
     @Query(value = "UPDATE user_account " +
-            "SET account_type = ?1 " +
+            "SET account_type = ?1, " +
+            "requesting = 0" +
             "WHERE user_name = ?2", nativeQuery = true)
     void promoteUser(String newType, String username);
+
+    @Modifying
+    @Query(value = "UPDATE user_account " +
+            "SET requesting = 1, " +
+            "why = ?2, " +
+            "referencing = ?3, " +
+            "experience = ?4, " +
+            "requesting_for = ?5 " +
+            "WHERE user_name = ?1", nativeQuery = true)
+    void addUserToRequestList(String userName, String why, String referencing, String experience, String requesting_for);
+
+    @Query(value = "SELECT requesting_for " +
+            "FROM user_account " +
+            "WHERE user_name = ?1", nativeQuery = true)
+    String getUserRequestingFor(String userName);
 
     @Query(value = "SELECT * " +
                    "FROM user_account " +
@@ -55,6 +71,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Query(value = "SELECT * " +
             "FROM user_account ", nativeQuery = true)
     List<User> getAllUsers();
+
+    @Query(value = "SELECT * " +
+            "FROM user_account " +
+            "WHERE requesting = 1", nativeQuery = true)
+    List<User> getAllUserRequests();
 
     @Query(value = "SELECT * " +
             "FROM user_account " +

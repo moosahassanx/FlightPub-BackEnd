@@ -8,15 +8,9 @@ package com.seng3150.flightpub.models;
 
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
-import org.springframework.context.annotation.Bean;
-
-import java.util.List;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Entity
@@ -72,6 +66,21 @@ public class User implements Serializable {
 
     @Column(name = "account_type")
     private String userType;
+
+    @Column(name = "requesting")
+    private int requesting;
+
+    @Column(name = "why")
+    private String why;
+
+    @Column(name = "referencing")
+    private String referencing;
+
+    @Column(name = "experience")
+    private String experience;
+
+    @Column(name = "requesting_for")
+    private String requestingFor;
 
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @Column(name = "booking_list")
