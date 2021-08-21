@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpecificationExecutor<Booking> {
 
 
@@ -30,4 +32,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
 
     @Query(value = "INSERT INTO booking (flight_number, payment_complete, user_id, airline_code, flight_departure_time, flight_airline_code, flight_flight_number) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
     int makeNewBooking(String flight_number, String payment_complete, int userId, String airline_code, String flight_departure_time, String flight_airline_code, String flight_flight_number);
+
+    @Query(value ="SELECT * " +
+            "FROM booking " +
+            "WHERE booking.user_id = ?1 ", nativeQuery = true)
+    List<Booking> foundBookings(String userId);
 }
