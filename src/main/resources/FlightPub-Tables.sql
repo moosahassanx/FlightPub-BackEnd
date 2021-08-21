@@ -254,7 +254,7 @@ create table wishlist
 			references user_account,
 	country_code3          varchar(255)
 		constraint wishlist_country_code3_FK
-			references country,
+			references destinations,
 	primary key (wishlist_id, user_id, country_code3)
 )
 go

@@ -11,7 +11,7 @@ import java.util.List;
 public interface WishlistRepository extends JpaRepository<Wishlist, Long>, JpaSpecificationExecutor<Wishlist> {
 
     @Query(value = "INSERT INTO wishlist " +
-            "(wishlist.user_id, wishlist.countryCode3)" +
+            "(wishlist.user_id, wishlist.country_code3)" +
             "OUTPUT Inserted.wishlist_id " +
             "VALUES (?1, ?2)", nativeQuery = true)
     int newWishlistItem(int user_id, String countryCode3);
@@ -24,7 +24,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long>, JpaSp
 
     @Modifying
     @Query(value = "DELETE FROM wishlist " +
-            "WHERE user_id = ?1 AND countryCode3 = ?2", nativeQuery = true
+            "WHERE user_id = ?1 AND country_code3 = ?2", nativeQuery = true
     )
     void removeWishlistItem(int user_id, String countryCode3);
 }
