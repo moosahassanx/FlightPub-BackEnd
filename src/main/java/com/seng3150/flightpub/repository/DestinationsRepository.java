@@ -35,4 +35,8 @@ public interface DestinationsRepository extends JpaRepository<Destinations, Stri
     // get top 2 trending 
     @Query(value = "SELECT TOP 2 * FROM destinations ORDER BY times_booked DESC", nativeQuery = true)
     List<Destinations> findTrending();
+
+    //  Get top 3 most booked destinations.
+    @Query(value = "SELECT TOP 3 * FROM destinations ORDER BY destinations.times_booked DESC", nativeQuery = true)
+    List<Destinations> getTop3Destinations();
 }
