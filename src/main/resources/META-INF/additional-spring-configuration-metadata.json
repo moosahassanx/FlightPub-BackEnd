@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "sspring.datasource.data",
+      "type": "java.lang.String",
+      "description": "Description for sspring.datasource.data."
+    },
+    {
+      "name": "sspring.datasource.data",
+      "type": "java.lang.String",
+      "description": "Description for sspring.datasource.data."
+    }
+  ] }
