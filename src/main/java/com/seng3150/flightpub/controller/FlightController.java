@@ -24,7 +24,7 @@ public class FlightController {
     public FlightController(FlightsRepository flightsRepository) {
         this.flightsRepository = flightsRepository;
     }
-
+    
     // Returns a list of flights representing the users search request
     @RequestMapping("/getflights")
     List<Flights> findAllDestinations(@RequestParam("from") String depart,
@@ -32,6 +32,17 @@ public class FlightController {
                                       @RequestParam("dep") String date) {
 
         return flightsRepository.findFlights(depart, arrive, date);
+    }
+
+    // GET REQUEST
+    // URI mapping to get trendingflights - key = destination, value = user selected destination
+    // Maps the users selected destination with the EDestination to get the destination code
+    // returns list of flights matching the destination code
+    @RequestMapping("/trendingflights")
+    List<Flights> getTrendingFlightDestinations(@RequestParam("Destination") String destination) {
+        // Maps the destination to the destination code for easier database mapping via enum class
+        String code = EDestinations.DestinationCodes.fromString(destination);
+        return flightsRepository.getTrendingFlights(code, "2020-09-01","2020-09-25");
     }
 
     //getFlexFlights?from=${destFrom}&to=${destTo}&dep1=${depStartDate.toJSON()}&dep2=${depEndDate.toJSON()}
@@ -42,16 +53,6 @@ public class FlightController {
                                       @RequestParam("dep2") String date2){
 
         return flightsRepository.findFlexFlights(depart, arrive, date, date2);
-    }
-    // GET REQUEST
-    // URI mapping to get trendingflights - key = destination, value = user selected destination
-    // Maps the users selected destination with the EDestination to get the destination code
-    // returns list of flights matching the destination code
-    @RequestMapping("/trendingflights")
-    List<Flights> getTrendingFlightDestinations(@RequestParam("Destination") String destination) {
-        // Maps the destination to the destination code for easier database mapping via enum class
-        String code = EDestinations.DestinationCodes.fromString(destination);
-        return flightsRepository.getTrendingFlights(code, "2020-09-01","2020-09-25");
     }
 
     @RequestMapping("/getflight")

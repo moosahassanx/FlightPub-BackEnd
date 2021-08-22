@@ -24,7 +24,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long>, JpaSp
 
     @Modifying
     @Query(value = "DELETE FROM wishlist " +
-            "WHERE user_id = ?1 AND country_code3 = ?2", nativeQuery = true
+            "WHERE user_id = ?1 AND countryCode3 = ?2", nativeQuery = true
     )
     void removeWishlistItem(int user_id, String countryCode3);
 }

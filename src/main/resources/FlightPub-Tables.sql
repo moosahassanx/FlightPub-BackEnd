@@ -40,9 +40,9 @@ create table destinations
     country_code3    varchar(255)  not null
         constraint [DestinationCountryCode_FK ]
             references country,
-    times_booked     int default 0,
+    times_booked     int default 0 not null,
     Tags varchar(264),
-    COVID     bit default 0
+    COVID     bit          not null default 0
 
 )
 go
@@ -211,21 +211,6 @@ create table booking
 )
 go
 
-create table user_account_booking_list
-(
-    user_id                            bigint       not null
-        constraint FKiwwfn9yke5j72up35hm6eucjk
-            references user_account,
-    booking_list_book_id               bigint       not null,
-    booking_list_flight_airline_code   varchar(255) not null,
-    booking_list_flight_departure_time datetime2    not null,
-    booking_list_flight_flight_number  varchar(255) not null,
-    constraint UK_33sg3qys5ekt8cgj7lhlsna3m
-        unique (booking_list_book_id, booking_list_flight_airline_code, booking_list_flight_departure_time,
-                booking_list_flight_flight_number)
-)
-go
-
 create table holiday_package
 (
     holiday_package_id      int             not null,
@@ -254,7 +239,7 @@ create table wishlist
 			references user_account,
 	country_code3          varchar(255)
 		constraint wishlist_country_code3_FK
-			references destinations,
+            references destinations,
 	primary key (wishlist_id, user_id, country_code3)
 )
 go

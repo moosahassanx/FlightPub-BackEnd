@@ -6,12 +6,14 @@ import com.seng3150.flightpub.repository.UserRepository;
 import com.seng3150.flightpub.repository.WishlistRepository;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;           // unused but leave this here anyway
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -37,28 +39,13 @@ public class WishlistController {
         return wishlistRepository.getWishlistItems((int)user_id);
     }
 
-
-    /*@DeleteMapping("/removeWishlistItem")
-    void removeWishlistItem(@PathVariable("userName") String user_name,
-                                      @PathVariable("countryCode3") String countryCode3) {
+    @Transactional
+    @RequestMapping("/removeWishlistItem")
+    ResponseEntity<?> removeWishlistItem(@RequestParam("userName") String user_name,
+                                      @RequestParam String countryCode3) {
         long user_id = userRepository.getDetailsByUserName(user_name).getId();
         this.wishlistRepository.removeWishlistItem((int)user_id, countryCode3);
-    }*/
-    @Transactional
-    @RequestMapping(value = "/removeWishlistItem",
-            method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> removeUser(@RequestBody HashMap<String, String> jsonData) {
-        System.out.println("===============================================================");
 
-        long user_id = userRepository.getDetailsByUserName(jsonData.get("userName")).getId();
-
-        System.out.println("userName: " + jsonData.get("userName"));
-        System.out.println("countryCode3: " + jsonData.get("countryCode3"));
-        System.out.println("user_id: " + (int)user_id);
-
-        wishlistRepository.removeWishlistItem((int)user_id, jsonData.get("countryCode3"));
-
-        return new ResponseEntity<>("Successfully removed", HttpStatus.OK);
+        return new ResponseEntity<>(countryCode3 + " removed from the wishlist.", HttpStatus.OK);
     }
 }

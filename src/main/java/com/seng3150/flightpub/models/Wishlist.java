@@ -24,9 +24,7 @@ public class Wishlist implements Serializable {
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "country_code3", nullable = false)
+    @JoinColumn(name = "countryCode3", nullable = false)
     private Destinations countryCode3;
-
-
 
 }

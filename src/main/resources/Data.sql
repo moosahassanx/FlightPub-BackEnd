@@ -373,7 +373,7 @@ VALUES
 
 
 BULK INSERT FlightPub.dbo.Availability
-FROM 'C:\Users\Ryan\Documents\SENG3160\FlightPub-BackEnd\src\main\resources\Availabilities.txt'
+FROM '\Availabilities.txt'
 WITH
 	(
 	FIELDTERMINATOR = ',',
@@ -632,7 +632,7 @@ VALUES
 	('VIE','ORY',1032);
 
 BULK INSERT FlightPub.dbo.flights
-FROM 'C:\Users\ahmed\Documents\GitHub\SENG3160\FlightPub-BackEnd\src\main\resources\Flights.txt'
+FROM '\Flights.txt'
 WITH
     (
     FIELDTERMINATOR = ',',
@@ -642,7 +642,7 @@ WITH
 
 
 BULK INSERT FlightPub.dbo.price
-FROM 'C:\Users\ahmed\Documents\GitHub\SENG3160\FlightPub-BackEnd\src\main\resources\Price.txt'
+FROM '\Price.txt'
 WITH
     (
     FIELDTERMINATOR = ',',

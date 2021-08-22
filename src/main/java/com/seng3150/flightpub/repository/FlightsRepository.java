@@ -53,14 +53,6 @@ public interface FlightsRepository extends JpaRepository<Flights, String>, JpaSp
                     "AND departure_time BETWEEN ?3 AND ?4", nativeQuery = true)
     List<Flights> findFlight(String airline_code, String destination_code, String date_from, String date_to);
 
-    
-    @Query(value = "SELECT TOP 1 flight_number " +
-                    "FROM flights " +
-                    "WHERE airline_code = ?1 " +
-                    "AND destination_Code = ?2 " +
-                    "AND departure_time BETWEEN ?3 AND ?4", nativeQuery = true)
-    String findFlightNumber(String airline_code, String destination_code, String date_from, String date_to);
-
     @Query(value = "SELECT f.*" +
             "FROM flights f " +
             "FULL OUTER JOIN airlines a ON a.airline_code = f.airline_code " +
@@ -71,8 +63,15 @@ public interface FlightsRepository extends JpaRepository<Flights, String>, JpaSp
             "AND  d.COVID = 0 " +
             "ORDER BY a.sponsored DESC", nativeQuery = true)
     List<Flights> findFlexFlights(String depart, String arrive, String date, String date2);
-
+    
+    @Query(value = "SELECT TOP 1 flight_number " +
+                    "FROM flights " +
+                    "WHERE airline_code = ?1 " +
+                    "AND destination_Code = ?2 " +
+                    "AND departure_time BETWEEN ?3 AND ?4", nativeQuery = true)
+    String findFlightNumber(String airline_code, String destination_code, String date_from, String date_to);
 }
+
 /*
     FlightRepository.java
         - Extends JPARepo and allows access to DB

@@ -30,4 +30,4 @@ public class PriceController {
                          @RequestParam("depdate") String date){
         return priceRepository.getTicketPrice(flightNum, classCode, tCode, date);
     }
-    }
+}
